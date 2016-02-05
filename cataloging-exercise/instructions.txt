@@ -1,0 +1,25 @@
+# Cataloging on the Command Line
+
+Catalogers can profit from many uses of the command line, primarily through batch processing metadata files to make many small changes or convert from one format to another. In this exercise, we'll learn how to run scripts on the command line, pass information to those scripts (such as what file we want them to process), and "redirect" output to a file. Ready? Let's go!
+
+## Running a Script
+
+## Passing Information to a Script & "Flags"
+
+## Output Redirection
+
+## Exercise One: Batch process a MRC file
+
+You may be thinking "but my ILS client can already do this"! And that's true in a number of cases, the operations you perform on the command line may be achievable elsewhere. Still, there's often greater flexibility in command line scripts, which can utilize complex logic that your ILS may not be able to, and these scripts can be combined to perform several operations in a row quickly.
+
+## Exercise Two: Use "help" to figure it out
+
+We learned earlier to pass information to a script using `--input` and `--output` flags. That's all well and good, but what if we're given a script or program and we're not sure what flags it accepts? We can often search the web for answers, and that's a fine approach, but one of the nicest things about the command line is how documentation is often right at our fingertips.
+
+In this folder there's a "exercise-two.py" script. Find out what it does and run it successfully on our sample MRC file. Unsure where to start? There's a common convention whereby the flag `--help` or its shorthand `-h` will provide information. Try getting help with and then using the script.
+
+## Notes
+
+- MARCgrep http://en.pusc.it/bib/MARCgrep
+- pymarc https://github.com/edsu/pymarc
+- Internet Archive Open Library Data https://archive.org/details/ol_data
