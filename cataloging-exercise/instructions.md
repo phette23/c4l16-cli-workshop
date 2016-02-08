@@ -41,6 +41,8 @@ We're using the familiar `ls` command but have added an option to it that make i
 
 Now what happens when you try to run "non-exe.script.sh"? Does it work? What do you think you'd have to do to make it _not_ executable any longer?
 
+By the way, if you want to _stop_ a script you can use Ctrl + C to do so. This sends a "keyboard interrupt" and will stop whatever your shell is currently doing. It can be _very_ handy when you realize you've accidentally run a script with the wrong parameters.
+
 ## Passing Information to a Script & "Flags"
 
 OK, we know to run a script we need to a) refer to its location, and b) make sure it's executable. So far, so good. But what if we want to pass information to a script? For instance, what if a script could run on different files or operate differently depending on the options we specify, much like how `ls -l` is different from plain ol' `ls`?
