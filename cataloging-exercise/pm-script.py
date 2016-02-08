@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from __future__ import print_function
 import argparse
 # see https://github.com/edsu/pymarc for pymarc documentation
