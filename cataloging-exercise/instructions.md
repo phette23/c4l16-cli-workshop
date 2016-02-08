@@ -28,7 +28,7 @@ Now what happens when you try to run "non-exe.script.sh"? Does it work? What do 
 
 ## Passing Information to a Script & "Flags"
 
-OK, we know to run a script we need to a) refer to its location, and b) make sure it's executable. So far, so good. But what if we want to pass information to a script? For instance, what if a script could run on different files or operate diffently depending on the options we specify, much like how `ls -l` is different from plain ol' `ls`?
+OK, we know to run a script we need to a) refer to its location, and b) make sure it's executable. So far, so good. But what if we want to pass information to a script? For instance, what if a script could run on different files or operate differently depending on the options we specify, much like how `ls -l` is different from plain ol' `ls`?
 
 The standard way to pass information on the command line is by "flags". We've actually already seen several examples, because these flags are merely the hyphenated letters we've used previously. But let's dive into a cataloging example using a wonderful script in this folder: MARCgrep.pl. MARCgrep is a tool for searching over MARC files and counting up how many records match a provided pattern, or have a certain field or subfield. It's syntax is like so:
 
@@ -62,21 +62,37 @@ What happened? Did your computer explode? Hopefully not. Most likely, the chmod 
 
 ## Output Redirection
 
+@TODO ERIC write an actual exercise here!!!
+
 ## Piping ?
+
+@TODO ERIC write something here!!!
 
 (is this worth going into? could see some cool applications where script output is piped through `sed` or similar)
 
 ## Exercise One: Batch process a MRC file
 
-You may be thinking "but my ILS client can already do this"! And that's true in a number of cases, the operations you perform on the command line may be achievable elsewhere. Still, there's often greater flexibility in command line scripts, which can utilize complex logic that your ILS may not be able to, and these scripts can be combined to perform several operations in a row quickly.
+Included in this folder is a Python script named "pm-script.py". It uses the incredibly popular "pymarc" Python module to batch process MARC records. The script's syntax is:
+
+```sh
+> ./pm-script.py --limit 100 input.mrc output.mrc
+```
+
+where the number after the optional "limit" flag is the maximum number of MARC records to process, the first first passed in the input, and the second file passed is where the output will be written to. The command also accepts an optional "--verbose" flag which causes it to print information about what it's doing. Try running the script a few times, at first with a small limit but then process the full file. What is the script doing? Can you write its output to the same file multiple times and if so what happens to the prior output? Can you run it on its own output and if so what does that accomplish?
+
+You may be thinking "but my ILS client can already do this"! And that's true in a number of cases, the operations you perform on the command line may be achievable elsewhere. Still, there's often greater flexibility in command line scripts, which can utilize complex logic that your ILS may not be able to, and these scripts can be combined to perform several operations in a row quickly. Try running the "batch-analysis.sh" script; what does it do? Remember you can run `cat batch-analysis.sh` to read the text of the script, or open it up in a command-line text editor like `nano` or `vim`.
+
+**Bonus Problem**: the "batch-analysis.sh" script writes out a plain text file. Try mimicking the script's use of the stream editor `sed` to delete URLs beginning with a certain pattern (put the pattern after the "^" in the original `sed` command and delete the dollar sign).
 
 ## Exercise Two: Use "help" to figure it out
 
-We learned earlier to pass information to a script using `--input` and `--output` flags. That's all well and good, but what if we're given a script or program and we're not sure what flags it accepts? We can often search the web for answers, and that's a fine approach, but one of the nicest things about the command line is how documentation is often right at our fingertips.
+We learned earlier to pass information to a script using a `--limit` flag and positional parameters. That's all well and good, but what if we're given a script or program and we're not sure what flags it accepts or where the positional parameters go? We can often search the web for answers, and that's a fine approach, but one of the nicest things about the command line is how documentation is often right at our fingertips.
+
+@TODO ERIC write the exercise-two script!!!
 
 In this folder there's a "exercise-two.py" script. Find out what it does and run it successfully on our sample MRC file. Unsure where to start? There's a common convention whereby the flag `--help` or its shorthand `-h` will provide information. Try getting help with and then using the script.
 
-Let's return to MARCgrep.pl too; what if we want to find out how many records _do not_ have a certain field? Try to use MARCgrep's help to find out!
+Let's return to MARCgrep.pl too; what if we want to find out how many records _do not_ have a certain field? Let's use MARCgrep's help to find out!
 
 ## Notes
 
