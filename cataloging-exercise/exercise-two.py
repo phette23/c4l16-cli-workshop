@@ -34,14 +34,14 @@ with open(args.input_file, 'rb') as fh:
                     for subfield in field.get_subfields(args.subfield):
                         field.delete_subfield(args.subfield)
                         if args.verbose:
-                            print('removed', args.field + '$' + args.subfield, 'from', record.title())
+                            print('removed a', args.field + '$' + args.subfield, 'subfield from', record.title())
         # ...we're removing a field
         else:
             if args.field in record:
                 # get_fields returns a list which we unpack with "*"
                 record.remove_field(*record.get_fields(args.field))
                 if args.verbose:
-                    print('removed', args.field, 'from', record.title())
+                    print('removed all', args.field, 'fields from', record.title())
 
         output.write(record.as_marc())
 
