@@ -79,7 +79,47 @@ What happened? Did your computer explode? Hopefully not. Most likely, the chmod 
 
 ## Output Redirection
 
-@TODO ERIC write an actual exercise here!!!
+Typically, when a script runs, it prints its output to "standard out", i.e. right in your terminal. But output can be redirect to go into a file, or to become the input of another script or program. Below, we'll learn how to send the output of MARCgrep to a file instead of our screen. This can be immensely helpful in a lot of situations; when we print out thousands of subject headings, we probably want to put them in a file to review or analyze later, not to read them by scrolling up a thousand lines in our terminal.
+
+**Writing to/over a file**
+
+We can write the output of a command to a file using the greater than sign and providing the name of the file. This command will write a short greeting to a text file:
+
+```sh
+> echo 'Hello, by jolly, hello!' > greetings.txt
+```
+
+What happens if we write a different salutation to the file?
+
+```sh
+> echo 'Good tidings, my friend!' > greetings.txt
+```
+
+Our new text overwrote the previous entry entirely. So the output redirect operator `>` has the following properties:
+
+- if the file doesn't exist, it will be created
+- if the file _does_ exist, its content will be erased
+- the file will be filled with the text output of the command preceding it
+
+Knowing this, try printing a list of your favorite MARC field to a text file using MARCgrep and the sample file provided here. Then overwrite the list with _your least favorite_ MARC field (it's the leader, isn't it? I knew it). Notice how, while you're running the command, you don't see any text printed to your terminal because it's all being _redirected_ into the file.
+
+**Appending to a file**
+
+We don't have to write over the contents of a file, erasing our favorite MARC field with our least favorite. Instead, using a slightly different operator—two greater than signs in a row ">>"—will _append_ our output to the end of a file.
+
+```sh
+> echo 'this is the first line' >> test.txt
+> echo 'this is the second line' >> test.txt
+> cat test.txt
+this is the first line
+this is the second line
+```
+
+Let's try using MARCgrep to make a list of all 650 fields with Library in them _and_ all 710 fields with "Library" in them. This will involve running the script twice and redirecting the output to the same file, but _appending_ to that file rather than overwriting it.
+
+Now, let's write all 650 fields with "Archive" in them to the same file, overwriting the list of fields we compiled previously. We can use the `cat` command to print out the file's text afterwards, checking if we did it right. The `head` command is also useful here; it prints out just the beginning of a file, not its full contents.
+
+What if we want to _prepend_ our output to the beginning of a file? Can you think of a way, involving the `cat` command, to do that?
 
 ## Piping ?
 
