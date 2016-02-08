@@ -2,9 +2,24 @@
 
 Catalogers can profit from many uses of the command line, primarily through batch processing metadata files to make many small changes or convert from one format to another. In this exercise, we'll learn how to run scripts on the command line, pass information to those scripts (such as what file we want them to process), and "redirect" output to a file. Ready? Let's go!
 
+## What exactly is a script?
+
+"Script" is probably a term you've heard, whether you've run one or not. A script simply collects a series of commands in one text file and executes them in order. So all the commands we've typed thus far could be put in a file and run in sequence. This is one of the tremendous powers of the command line; anything we can do, no matter how lengthy or complex, can be written into a single script and executed over and over again without much trouble.
+
+For instance, take these three commands:
+
+```sh
+> echo 'hello!' >> example.txt
+> echo "example.txt is $(wc -l example.txt | sed -e 's/[a-zA-Z. ]//g') lines long"
+> echo 'and the last line reads:'
+> tail -n1 example.txt
+```
+
+Rather than type them all out time and time again, we can write them all into a script where it's trivial to repeat them. There are some other subtleties to scripts (like telling the operating system what program to use to run the script) but let's move on for now.
+
 ## Running a Script
 
-Running a script is similar to using any command or executing a program, you simply type the full path to the script and press Enter. But this becomes incredibly tedious; we don't want to have to type out a long path to our current directory every time we run a script. Instead, we use the period (".") shorthand which refers to our current location. So we can run the "script.sh" in this folder like so:
+Running a script is similar to using any command or executing a program, you simply type the full path to the script file and press Enter. But this becomes incredibly tedious; we don't want to have to type out a long path to our current directory every time we run a script. Instead, we use the period (".") shorthand which refers to our current location. So we can run the "script.sh" in this folder like so:
 
 ```sh
 > ./script.sh
@@ -42,7 +57,7 @@ There's a full example below; what do you expect it will produce? Give it a try!
 > ./MARCgrep.pl -e '245,,,,fox' -f '245' example.mrc
 ```
 
-Just to practice passing different information to the script, try to answer the following questions using the provided "example.mrc" set of records:
+Note that I've wrapped the information I'm passing to the script in quotation marks. This isn't strictly necessary, but is a good habit to get into because (as we discussed earlier) spaces can cause trouble on the command line. Just to practice passing different information to the script, try to answer the following questions using the provided "example.mrc" set of records:
 
 - How many records have "turkey" in their 245 title field?
 - What's the title of the record where the author's (100 field) last name is Rodriguez?
@@ -88,9 +103,7 @@ You may be thinking "but my ILS client can already do this"! And that's true in 
 
 We learned earlier to pass information to a script using a `--limit` flag and positional parameters. That's all well and good, but what if we're given a script or program and we're not sure what flags it accepts or where the positional parameters go? We can often search the web for answers, and that's a fine approach, but one of the nicest things about the command line is how documentation is often right at our fingertips.
 
-@TODO ERIC write the exercise-two script!!!
-
-In this folder there's a "exercise-two.py" script. Find out what it does and run it successfully on our sample MRC file. Unsure where to start? There's a common convention whereby the flag `--help` or its shorthand `-h` will provide information. Try getting help with and then using the script.
+In this folder there's a "exercise-two.py" script. Find out what it does and run it successfully on our sample MRC file. Unsure where to start? There's a common convention whereby the flag `--help` or its shorthand `-h` will provide information. Try getting help with and then using the script. Run the script multiple times with different parameters to make sure you understand its usage.
 
 Let's return to MARCgrep.pl too; what if we want to find out how many records _do not_ have a certain field? Let's use MARCgrep's help to find out!
 
