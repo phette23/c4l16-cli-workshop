@@ -2,7 +2,7 @@
 
 Catalogers can profit from many uses of the command line, primarily through batch processing metadata files to make many small changes or convert from one format to another. In this exercise, we'll learn how to run scripts on the command line, pass information to those scripts (such as what file we want them to process), and "redirect" output to a file. Ready? Let's go!
 
-## What exactly is a script?
+## What Exactly Is a Script?
 
 "Script" is probably a term you've heard, whether you've run one or not. A script simply collects a series of commands in one text file and executes them in order. So all the commands we've typed thus far could be put in a file and run in sequence. This is one of the tremendous powers of the command line; anything we can do, no matter how lengthy or complex, can be written into a single script and executed over and over again without much trouble.
 
@@ -121,11 +121,12 @@ Now, let's write all 650 fields with "Archive" in them to the same file, overwri
 
 What if we want to _prepend_ our output to the beginning of a file? Can you think of a way, involving the `cat` command, to do that?
 
-## Piping ?
+## "Piping" Output Through Multiple Commands
 
-@TODO ERIC write something here!!!
+Perhaps the most powerful feature of the command line is that you can not only redirect a command's output to a file, you can pass the output of one command as the input to a following command. This seemingly simple feature allows us to create complex yet elegant operations by chaining together many smaller, simpler actions.
 
-(is this worth going into? could see some cool applications where script output is piped through `sed` or similar)
+- thru `sed` to modify things (delete lines, modify lines)
+- thru `grep` then to `wc -l`? to do like rudimentary stats
 
 ## Exercise One: Batch process a MRC file
 
