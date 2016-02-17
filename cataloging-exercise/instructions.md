@@ -123,10 +123,44 @@ What if we want to _prepend_ our output to the beginning of a file? Can you thin
 
 ## "Piping" Output Through Multiple Commands
 
-Perhaps the most powerful feature of the command line is that you can not only redirect a command's output to a file, you can pass the output of one command as the input to a following command. This seemingly simple feature allows us to create complex yet elegant operations by chaining together many smaller, simpler actions.
+Perhaps the most powerful feature of the command line is that you can not only redirect a command's output to a file, you can pass the output of one command as the input to a following command. This seemingly simple feature allows us to create complex yet elegant operations by chaining together many smaller, simpler actions. We do so by putting a vertical bar "|" between two commands, which causes the _output_ of the former to be used as the _input_ of the latter. What is then printed out (or redirect to a file!) is the result of the last command.
 
-- thru `sed` to modify things (delete lines, modify lines)
-- thru `grep` then to `wc -l`? to do like rudimentary stats
+Earlier, we used MARCgrep to print out MARC fields matching a given pattern. You may have noticed that the output included blank lines, which cluttered it and made it unnecessarily lengthy. What if we pipe the output of MARCgrep through another command to strip out blank lines? Here's an example utilizing our earlier search for the word "fox" in title fields:
+
+```sh
+> ./MARCgrep.pl -e '245,,,,fox' -f '245' example.mrc | sed -e '/$^/d'
+```
+
+This command is more arcane than anything we've seen previously; what's with all the silly punctuation at the end?!? It translates to "delete every line with no characters on it", since the `$^` bit is a Regular Expression which matches _empty_ strings. Regular Expressions are complex, powerful tools...and well beyond the scope of this workshop. But if you already know them, the syntax of the handy `sed` command isn't tricky. `sed` stands "Stream EDitor" and it excels at manipulating text being piped around. You can even string together numerous `sed` commands like so:
+
+```sh
+> echo 'MARC is great!' | sed -e 's/is/must/' | sed -e 's/great/die/'
+```
+
+Try the above command on your system; what output does it produce? By now, we have figured out that the `sed` syntax is basically `sed -e {EDIT}` where {EDIT} is some type of pattern-based edit to perform on each line of the input. We've already seen two types of `sed` edits:
+
+- `sed -e '/{PATTERN}/d'` _deletes_ all lines matching the {PATTERN}
+- `sed -e 's/{PATTERN}/{SUBSTITUTE}/'` _replaces_ the first mactched instance of {PATTERN} with its {SUBSTITUTE} on each line
+
+We can actually perform several edits with one call to `sed` by stringing together a series of `-e {EDIT}` flags, so the example above could be written more concisely as `sed -e 's/is/must/' -e 's/great/die/'` but I wanted to demonstrate that an arbitrary number of pipes can be used in one command. Knowing the `sed` syntax, let's try a few exercises:
+
+- Print out all the 650 subject fields with "Pennsylvania" but delete 650s with the word "history" in them
+- Do the above but also filter out blank lines
+- Do the above but drive Pittsburgh natives mad by replacing "Pennsylvania" with "Philadelphia"
+- Finally, try writing the results of these operations to a file
+
+See how we can string together a number of simple operations to do something rather complex? The last exercise really drives home how the "stream" of text is simply being diverted; rather than printing it to our screen right after the first command, we sent it through a few pipes and finally into a file.
+
+Knowing the find/replace and delete uses of `sed` provides a tremendous amount of utility on the command line. Let's learn one more command just to get further piping practice. Say we want to _count_ the number of subject headings that match a pattern (ignoring that MARCgrep has this feature built in...). The `wc` command stands for "word count" and it can be used as a rudimentary analysis tool:
+
+```sh
+> MARCgrep.pl -e '245,,,,library' -f '245' | wc
+```
+
+This prints out three quantities: first the number of _lines_ in our output, then the number of _words_, and lastly the number of _bytes_. If we're only interested in one of those figures, `wc` has flags that allow us to retrieve only the desired one. Use either the manual page (`man wc`) or the `--help` flag to figure out what the flags are, then complete these two exercises:
+
+- How many titles in the example MARC file contain the words "library" or "archive"? (Remember that you might need to filter out blank lines to obtain an accurate total)
+- How many words are in each of the title fields containing the word "fox"? (Don't cheat by counting yourself! This is probably easiest if you `echo` the titles one-by-one into `wc`)
 
 ## Exercise One: Batch process a MRC file
 
