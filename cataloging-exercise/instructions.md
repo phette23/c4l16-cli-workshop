@@ -2,9 +2,27 @@
 
 Catalogers can profit from many uses of the command line, primarily through batch processing metadata files to make many small changes or convert from one format to another. In this exercise, we'll learn how to run scripts on the command line, pass information to those scripts (such as what file we want them to process), and "redirect" output to a file. Ready? Let's go!
 
+## Setup
+
+We'll start with the worst part: sometimes we need to install software on the command line to Get Things Done. And sometimes installation can be quite annoying, involving errors, changing permissions, and editing our shell's configuration files. Hopefully this installation will go smoothly for you, but if not please ask your fellow attendees or the workshop instructors for help.
+
+What are we doing, precisely? We want to use the provided "MARCgrep.pl" script, an excellent script written in the Perl programming language. Only to do so, we need the "MARC::Batch" module which the script utilizes. MARC::Batch provides the script with handy MARC processing tools so that it doesn't have to be a million lines long and filled with complex MARC parsing code. To install it, we use `cpan` which a sort of package manager for Perl that allows us to install modules, bits of reusable code. Run the following command:
+
+```sh
+> cpan MARC::Batch
+```
+
+An inordinate number of prompts will occur as `cpan` asks you for your entire personal history. You should be able to simply press Return through each question. Then, when you're finished, the script _still won't work_! Arrgh! We need to restart our shell so it recognizes the changes that `cpan` has made and knows where to find the newly added module. We can do so by running:
+
+```sh
+> exec -l zsh
+```
+
+Whew, hopefully all is well. We should be seeing a typical command line prompt now. Let's get to scripting.
+
 ## What Exactly Is a Script?
 
-"Script" is probably a term you've heard, whether you've run one or not. A script simply collects a series of commands in one text file and executes them in order. So all the commands we've typed thus far could be put in a file and run in sequence. This is one of the tremendous powers of the command line; anything we can do, no matter how lengthy or complex, can be written into a single script and executed over and over again without much trouble.
+"Script" is probably a term you've heard, whether you've run one or not. A script simply collects some lines of code or commands in one text file and executes them. Actually, all the commands we've typed thus far could be put in a file and run in sequence. This is one of the tremendous powers of the command line; anything we can do, no matter how lengthy or complex, can be written into a single script and executed over and over again without much trouble.
 
 For instance, take these three commands:
 
@@ -15,7 +33,7 @@ For instance, take these three commands:
 > tail -n1 example.txt
 ```
 
-Rather than type them all out time and time again, we can write them all into a script where it's trivial to repeat them. There are some other subtleties to scripts (like telling the operating system what program to use to run the script) but let's move on for now.
+Rather than type them all out time and time again, we can write them into a script where their repetition is trivial. There are some other subtleties to scripts (like telling the operating system what program to use to run the script) but let's move on for now.
 
 ## Running a Script
 
@@ -41,17 +59,17 @@ We're using the familiar `ls` command but have added an option to it that make i
 
 Now what happens when you try to run "non-exe.script.sh"? Does it work? What do you think you'd have to do to make it _not_ executable any longer?
 
-By the way, if you want to _stop_ a script you can use Ctrl + C to do so. This sends a "keyboard interrupt" and will stop whatever your shell is currently doing. It can be _very_ handy when you realize you've accidentally run a script with the wrong parameters.
+By the way, if you want to _stop_ a script you can use Ctrl + C to do so. This sends a "keyboard interrupt" and will stop whatever your shell is currently doing. It can be _very_ handy when you realize you've accidentally run a script with the wrong parameters. Parsing our example MARC file will take a long time so remember Ctrl + C is vital.
 
 ## Passing Information to a Script & "Flags"
 
 OK, we know to run a script we need to a) refer to its location, and b) make sure it's executable. So far, so good. But what if we want to pass information to a script? For instance, what if a script could run on different files or operate differently depending on the options we specify, much like how `ls -l` is different from plain ol' `ls`?
 
-The standard way to pass information on the command line is by "flags". We've actually already seen several examples, because these flags are merely the hyphenated letters we've used previously. But let's dive into a cataloging example using a wonderful script in this folder: MARCgrep.pl. MARCgrep is a tool for searching over MARC files and counting up how many records match a provided pattern, or have a certain field or subfield. It's syntax is like so:
+One common way to pass information on the command line is by "flags". We've already seen several examples, because these flags are merely the hyphenated letters we've used previously. But let's dive into a cataloging example using a wonderful script in this folder: MARCgrep.pl. MARCgrep is a tool for searching over MARC files and counting up how many records match a provided pattern, or have a certain field or subfield. It's syntax is like so:
 
-- The "-e" flag is followed by a string like "field,indicator1,indicator2,subfield,value" such as "245,,,,fox" (matches any record with "fox" in its 245 title field)
+- The "-e" flag is followed by a string like "{field},{indicator1},{indicator2},{subfield},{value}" such as "245,,,,fox" (matches any record with "fox" in its 245 title field)
 - The "-c" flag, if present, means that the script only counts how many records match the pattern, otherwise the script spits out the full record
-- The "-f" flag can be followed by a comma-separated list of fields to print instead of the full record, e.g. we could use "245,100" to print just the title and author fields.
+- The "-f" flag can be followed by a comma-separated list of fields to print instead of the full record, e.g. we use "245,100" to print just the title and author fields.
 
 There's a full example below; what do you expect it will produce? Give it a try!
 
@@ -59,7 +77,7 @@ There's a full example below; what do you expect it will produce? Give it a try!
 > ./MARCgrep.pl -e '245,,,,fox' -f '245' example.mrc
 ```
 
-Note that I've wrapped the information I'm passing to the script in quotation marks. This isn't strictly necessary, but is a good habit to get into because (as we discussed earlier) spaces can cause trouble on the command line. Just to practice passing different information to the script, try to answer the following questions using the provided "example.mrc" set of records:
+Note that we've wrapped the information we're passing to the script in quotation marks. This isn't strictly necessary, but is a good habit to get into because (as discussed earlier) spaces can cause trouble on the command line. Just to practice passing different information to the script, try to answer the following questions using the provided "example.mrc" set of records:
 
 - How many records have "turkey" in their 245 title field?
 - What's the title of the record where the author's (100 field) last name is Rodriguez?
@@ -79,7 +97,7 @@ What happened? Did your computer explode? Hopefully not. Most likely, the chmod 
 
 ## Output Redirection
 
-Typically, when a script runs, it prints its output to "standard out", i.e. right in your terminal. But output can be redirect to go into a file, or to become the input of another script or program. Below, we'll learn how to send the output of MARCgrep to a file instead of our screen. This can be immensely helpful in a lot of situations; when we print out thousands of subject headings, we probably want to put them in a file to review or analyze later, not to read them by scrolling up a thousand lines in our terminal.
+Typically, when a script runs, it prints its output to "standard out", i.e. right in our terminal. But output can be redirected into a file, or become the input of another script or program. Below, we'll learn how to send the output of MARCgrep to a file instead of our screen. This can be immensely helpful in a lot of situations; when we print out thousands of subject headings, we probably want to put them in a file to review or analyze later, not to read them by scrolling a thousand lines in our terminal.
 
 **Writing to/over a file**
 
@@ -101,25 +119,25 @@ Our new text overwrote the previous entry entirely. So the output redirect opera
 - if the file _does_ exist, its content will be erased
 - the file will be filled with the text output of the command preceding it
 
-Knowing this, try printing a list of your favorite MARC field to a text file using MARCgrep and the sample file provided here. Then overwrite the list with _your least favorite_ MARC field (it's the leader, isn't it? I knew it). Notice how, while you're running the command, you don't see any text printed to your terminal because it's all being _redirected_ into the file.
+Knowing this, try printing a list of your favorite MARC field to a text file using MARCgrep and the sample file provided here. Then overwrite the list with _your least favorite_ MARC field (it's the leader, isn't it? I knew it). Notice how, while we're running the command, we don't see any text printed to our terminal because it's all being _redirected_ into the file.
 
 **Appending to a file**
 
 We don't have to write over the contents of a file, erasing our favorite MARC field with our least favorite. Instead, using a slightly different operator—two greater than signs in a row ">>"—will _append_ our output to the end of a file.
 
 ```sh
-> echo 'this is the first line' >> test.txt
-> echo 'this is the second line' >> test.txt
-> cat test.txt
+> echo 'this is the first line' >> lines.txt
+> echo 'this is the second line' >> lines.txt
+> cat lines.txt
 this is the first line
 this is the second line
 ```
 
-Let's try using MARCgrep to make a list of all 650 fields with Library in them _and_ all 710 fields with "Library" in them. This will involve running the script twice and redirecting the output to the same file, but _appending_ to that file rather than overwriting it.
+Let's try using MARCgrep to make a list of all 650 fields with Library in them _and_ all 710 fields with "Library" in them. This involves running the script twice and redirecting the output to the same file, but _appending_ to that file rather than overwriting it.
 
 Now, let's write all 650 fields with "Archive" in them to the same file, overwriting the list of fields we compiled previously. We can use the `cat` command to print out the file's text afterwards, checking if we did it right. The `head` command is also useful here; it prints out just the beginning of a file, not its full contents.
 
-What if we want to _prepend_ our output to the beginning of a file? Can you think of a way, involving the `cat` command, to do that?
+What if we want to _prepend_ our output to the beginning of a file? Can you think of a way, involving the `cat` command, to do that? Spoiler: it will not be straightforward.
 
 ## "Piping" Output Through Multiple Commands
 
@@ -170,9 +188,9 @@ Included in this folder is a Python script named "pm-script.py". It uses the inc
 > ./pm-script.py --limit 100 input.mrc output.mrc
 ```
 
-where the number after the optional "limit" flag is the maximum number of MARC records to process, the first first passed in the input, and the second file passed is where the output will be written to. The command also accepts an optional "--verbose" flag which causes it to print information about what it's doing. Try running the script a few times, at first with a small limit but then process the full file. What is the script doing? Can you write its output to the same file multiple times and if so what happens to the prior output? Can you run it on its own output and if so what does that accomplish?
+where the number after the optional "limit" flag is the maximum number of MARC records to process, the first first passed in the input, and the second file passed is where the output will be written to. The command also accepts an optional "--verbose" flag which causes it to print information about what it's doing. Try running the script a few times, at first with a small limit but then process the full file. What is the script doing? Can we write its output to the same file multiple times and if so what happens to the prior output? Can we run it on its own output and if so what does that accomplish?
 
-You may be thinking "but my ILS client can already do this"! And that's true in a number of cases, the operations you perform on the command line may be achievable elsewhere. Still, there's often greater flexibility in command line scripts, which can utilize complex logic that your ILS may not be able to, and these scripts can be combined to perform several operations in a row quickly. Try running the "batch-analysis.sh" script; what does it do? Remember you can run `cat batch-analysis.sh` to read the text of the script, or open it up in a command-line text editor like `nano` or `vim`.
+You may be thinking "but my ILS client can already do this"! And that's true in a number of cases, the operations possible on the command line may be achievable elsewhere. Still, there's often greater flexibility in command line scripts, which can utilize complex logic that your ILS may not be able to, and these scripts can be combined to perform several operations in a row quickly. Try running the "batch-analysis.sh" script; what does it do? Remember you can run `cat batch-analysis.sh` to read the text of the script, or open it up in a text editor.
 
 **Bonus Problem**: the "batch-analysis.sh" script writes out a plain text file. Try mimicking the script's use of the stream editor `sed` to delete URLs beginning with a certain pattern (put the pattern after the "^" in the original `sed` command and delete the dollar sign).
 
@@ -188,4 +206,5 @@ Let's return to MARCgrep.pl too; what if we want to find out how many records _d
 
 - MARCgrep http://en.pusc.it/bib/MARCgrep
 - pymarc https://github.com/edsu/pymarc
-- Internet Archive Open Library Data https://archive.org/details/ol_data
+- Internet Archive Open Library Data https://archive.org/details/ol_data (source of example MARC)
+- `sed` tutorail http://www.grymoire.com/Unix/Sed.html
