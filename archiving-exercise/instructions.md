@@ -49,13 +49,31 @@ This doesn't have to make a lot of sense to you right now; we have examples belo
 
 Our volunteers didn't all know .csv was a thing, so they saved their files full of comma-separated values as text files, ending in .txt. It's cool, we can fix that right up. 
 
-What we want to do is to find every file that ends in ".txt" and change it so it ends in ".csv" instead. Don't type it in yet, but the command for that is
+What we want to do is to find every file that ends in ".txt" and change it so it ends in ".csv" instead. __Don't type it in yet__, but the command for that is
 
 `rename 's/\.txt$/.csv/' *.txt`
 
-You have to look at it out of order, kind of:
+You have to look at it out of order, to understand what it's doing:
 
-`rename [whocares] *.txt` means we're only going to match on files that end in ".txt". This is important and possibly confusing: the `*.txt` at the end of the command is _not_ a regular expression. This is the usage of `*` that you're more used to from library databases: it's a wildcard.
+`rename [any regex] *.txt` means we're telling the command to operate on files that end in .txt. This is important and possibly confusing: the `*.txt` at the end of the command is __not__ a regular expression. This is the usage of `*` that you're more used to from library databases: it's a wildcard. We're telling `rename` to match on every filename that ends in .txt, no matter what characters come before it.
+
+Wildcards are a really useful thing on the command line.
+
+We could still put qualifiers into the regular expression (the middle part of the command that we're ignoring right now) that would make the `rename` command skip certain filenames, and we will; but it's important to understand what that third argument in the command is doing.
+
+Now let's look at the middle argument: `'s/\.txt$/.csv/'` - the single-quotes around the regular expression tell the command line interpreter that it's all one statement. 
+
+The `s/x/y/` pattern means we're going to swap one thing for another. 
+
+`.txt` is what we're looking for, and we specify that it needs to be at the end of the string with `$`. But `.` means something ("any character") if it's not escaped, so we have to add the `\` in front of it. 
+
+`.csv` is refreshingly straightforward, right? It puts a literal ".csv" in where the .txt was removed from.
+
+Look at what the command would do if you executed it by typing
+
+`rename -n 's/\.txt$/.csv/' *.txt`
+
+The `-n` flag prevented it from actually running; it jus showed you what it _would_ do. So type the same command without the flag (-n) to execute it.
 
 #### Change dashes to underscores
 
