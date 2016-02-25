@@ -55,7 +55,7 @@ What we want to do is to find every file that ends in ".txt" and change it so it
 
 You have to look at it out of order, kind of:
 
-`rename [whocares] *.txt` means we're only going to match on files that end in ".txt". This is important and possibly confusing: the "*.txt" at the end of the command is _not_ a regular expression. This is the usage of `*` that you're more used to from library databases: it's a wildcard.
+`rename [whocares] *.txt` means we're only going to match on files that end in ".txt". This is important and possibly confusing: the `*.txt` at the end of the command is _not_ a regular expression. This is the usage of `*` that you're more used to from library databases: it's a wildcard.
 
 #### Change dashes to underscores
 
