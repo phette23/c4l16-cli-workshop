@@ -35,7 +35,7 @@ This is by no means a complete tutorial on regular expressions. Someone please p
 - `[]` - means character class
 - `*` - means "match the preceding thing any number of times"
 - `?` - means "the preceding thing is optional" (match 0 or 1 times)
-- `+` - means "one or more"
+- `+` - means "match one or more times"
 
 #### Change .txt to .csv
 
@@ -55,7 +55,7 @@ This is by no means a complete tutorial on regular expressions. Someone please p
 
 #### Make everything lowercase
 
-This won't work for a Mac.
+This (apparently) won't work on a Mac, because Macs (appear to) have case-insensitive file naming. It works fine on 
 
 `rename 's/([A-Z])/\L$1/g' *`
 
