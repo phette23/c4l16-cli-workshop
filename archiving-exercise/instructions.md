@@ -39,10 +39,10 @@ Here's a list of the regular expression syntax we'll use today (and maybe one we
 <!---
 - `^` - means "not," in any case we'll use it today; it can also mean "beginning of line"
 -->
-- `$` - means "the end of the string"
+- `$` - means "the end of the string" (if it's in the first half of a switch statement)
 - `[]` - means "character class," or "match one thing out of what's inside the brackets"; it changes the behavior of special characters, too 
 - `()` - means "group" and allows a match to be referred to later
-- `$` - refers to a previously matched group (e.g. `$1`)
+- `$` - refers to a previously matched group (e.g. `$1`) (if it's in the second half of a switch statement)
 - `*` - means "match the preceding thing any number of times"
 - `?` - means "the preceding thing is optional" (match 0 or 1 times)
 - `+` - means "match one or more times"
@@ -87,6 +87,10 @@ Other places this might come in handy:
 
 #### Change the various delimiters to underscores
 
+Our volunteers' delimiters (the things that split "code4lib," the year, and what kind of thing is in the file) are all over the place. There are plus signs, dashes, spaces, and underscores.
+
+I like underscores, so let's standardize on that.
+
 This can be done with three commands:
 
 `rename 's/-/_/g' *`
@@ -116,11 +120,15 @@ What's kind of cool, though, is that this whole character swapping deal can also
 
 `rename 's/[ +-]/_/g' *'
 
-The brackets are a game changer. They make what's inside them into what's known as a "character class," meaning that the regular expression will match one time, on any one thing inside them (just one time, unless you use a modifier). They also change the rules, because, notice: the space and plus sign aren't escaped. I know, believe me, I _know_. But just roll with it, believe me, try each example for yourself (trust but verify!), and see that it works. 
+The brackets are a game changer. They make what's inside them into what's known as a "character class," meaning that the regular expression will match one time, on any one thing inside them (_just_ one time, unless you use a modifier like `*`). They also change the rules, because, notice: the space and plus sign aren't escaped. I know, believe me, I _know_. But just roll with it, believe me, try each example for yourself (trust but verify!), and see that it works.
+
+Now, run either the three separate commands or the combined command (using `-n` to see the output before you commit to it).  
 
 #### Make everything lowercase
 
-Note: This (apparently) won't work on a Mac, because Macs seem to have case-insensitive file naming. (I'm not bitter. This didn't waste _hours_ of my time. Nope.) It works fine on Nitrous and many other systems with command line interfaces, so it's definitely worth your time to find out about. Just know that sometimes it'll fail with a message along the lines of "'Code4Lib_programs_2014.csv' not renamed: 'code4lib_programs_2014.csv' already exists."
+The volunteers all capitalized Code4Lib differently, just as they likely were split on how it's pronounced. Capitalization can affect how things are alphabetized in some systems, and it just looks messy; so let's make everything lowercase, shall we?
+
+Note: This (apparently) won't work on a Mac, because Macs seem to have case-insensitive file naming. (I'm not bitter. This didn't waste _hours_ of my time. Nope.) It works fine on Nitrous and many other systems with command line interfaces, so it's definitely worth your time to find out about. Just know that, on some systems, it'll fail with a message along the lines of "'Code4Lib_programs_2014.csv' not renamed: 'code4lib_programs_2014.csv' already exists."
 
 Anyway, the command:
 
@@ -136,9 +144,19 @@ Notice that our character class is inside parentheses. That allows us to grab th
 
 And `\L` says "the lowercase of," so that `\L$1` is "the lowercase of that group we grabbed."
 
-#### Put the year second in the filename
+Run the command, and see the beauty of all-lowercase filenames!
 
-`rename -n 's/([a-z]*)_([a-z]*)_([0-9]*)/$1_$3_$2/' *`
+#### Make the year appear in the same order in every filename
+
+The volunteers seemed to split halfway on whether they named their files "code4lib-year-type.csv" or "code4lib-type-year.csv", but worry not; we can fix it with a simple(?) `rename` command.
+
+This is the only example that relies on the others all having been run first; the others could have been done in any order. This one assumes everything is lowercase and all of the delimiters are underscores. So make sure you ran all the others first.
+
+`rename 's/([a-z]*)_([a-z]*)_([0-9]*)/$1_$3_$2/' *`
+
+Nothing in this command is new, except for using multiple groups. It's just more complex-_looking_.
+
+
 
 
 
