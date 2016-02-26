@@ -26,7 +26,7 @@ Now go get a coffee (or make a tutorial 😁) while the system processes.
 
 When it's finished, you might get a popup asking you for money. You can close it.
 
-![Say no to popups](https://raw.githubusercontent.com/csheldonhess/c4l16-cli-workshop/master/images/no_popup.jpg "Close the popup")
+![Say no to popups](https://raw.githubusercontent.com/csheldonhess/c4l16-cli-workshop/master/images/nopopup.jpg "Close the popup")
 
 Now a screen will come up, showing a nearly invisible (on my monitor, anyway) box with a plus sign. Click it.
 
