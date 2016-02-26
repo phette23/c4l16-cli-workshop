@@ -1,10 +1,12 @@
 # Command line tools for archivists
 
-prereqs: cd, pwd, ls, "what is bash", 
+There are numerous ways archivists can benefit from command line tools. In particular, the exercises below will cover conversion of character encoding, as well as batch renaming of files. Parts of the cataloger and webdev exercises will likely be of interest, too; be sure to check those out after you're finished here!
+
+OK, here we go!
 
 ## Setup
 
-(Get a tarball with junkfiles.py and anything else I need you to have. Unball(?) it. Get to the right directory.)
+(Get a tarball with junkfiles.py and anything else I need you to have. Untar it. Get to the right directory.)
 
 ## File formatting issues
 
@@ -45,9 +47,13 @@ You can change the formatting of a file with `iconv`.
 
 ## Batch renaming files
 
-You have volunteered to archive all of the data from all the Code4Lib conferences up to now. Thanks! Unfortunately, the data were put together by lots of really enthusiastic volunteers, who were not given a complete file naming convention ahead of time. (Let’s pretend there aren’t a ton of metadata experts in the Code4Lib community who would prevent that from happening.) Everything is in CSV (comma-separated values) format.
+Let's pretend you have volunteered to archive all of the data from all the Code4Lib conferences up to now. Thanks! Unfortunately, the data were put together by lots of really enthusiastic volunteers, who were not given a complete file naming convention ahead of time. (Let’s pretend there aren’t a ton of metadata experts in the Code4Lib community who would prevent that from happening.) Everything is in CSV (comma-separated values) format.
 
-Navigate to the folder (SOME FOLDER) Look at what's in the folder (`ls`).
+Navigate to the folder (SOME FOLDER) Run the following command:
+
+`./junkfiles.py`
+
+Now, change directory (`cd`) to the `c4lfiles` directory, and look at what's in there (`ls`).
 
 As you can see, there are about 100 files there, all from different years. They're kind of a mess. Renaming all of these files to all use the same naming convention would be tedious and take quite a while to do by hand, but we're going to clean this whole thing up with less than five minutes of work.
 
