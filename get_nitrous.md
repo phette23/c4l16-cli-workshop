@@ -1,3 +1,7 @@
+<style>img { 
+   border:1px solid #021a40;
+}</style>
+
 # Get your own Nitrous.io account
 
 Go to https://www.nitrous.io
