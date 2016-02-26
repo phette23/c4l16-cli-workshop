@@ -6,6 +6,40 @@ prereqs: cd, pwd, ls, "what is bash",
 
 (Get a tarball with junkfiles.py and anything else I need you to have. Unball(?) it. Get to the right directory.)
 
+## File formatting issues
+
+Let's say you've got some files that aren't in the right character set. They're in ASCII, but you need them to be in UTF-8 Unicode. Or they're in UTF-8 but they need to be in UTF-16.
+
+You can look at what format your file is with the `file` command.
+
+Navigate to (SOME DIRECTORY) and type the following:
+
+`file -bi lorem.txt`
+
+The `-b` flag tells it to be brief, not to put the filename at the beginning of the output.
+
+Including `-i` changes the format of its output to include (MIME type)[https://en.wikipedia.org/wiki/Media_type] along with, if applicable, the character encoding. To see the difference, go ahead and also type
+
+`file -b lorem.txt` or `file lorem.txt`
+
+Sometimes having the more precise output is helpful, so getting in the habit of using `-bi` is not a bad choice.
+
+So we know our file is UTF-8. 
+
+Look inside the file. There are a number of ways to do this, but my favorite is `more`. Here's the command for that:
+
+`more lorem.txt`
+
+You can scroll slowly by hitting Enter, or quickly by hitting the spacebar. If you are tired of scrolling, just type the letter `q`.
+
+Digression: the command `clear` will remove all the old commands and files you've viewed from your field of view, giving you a nice, clean command line interface. Feel free to use it at any point. You can hit the up arrow to get to your last command, and use up and down to scroll back through earlier commands.
+
+You can change the formatting of a file with `iconv`.
+
+`iconv -f UTF-8 -t UTF-16  lorem.txt > lorem2.txt`
+
+(THIS IS NOT VERY USEFUL, THOUGHTS?)
+
 ## Batch renaming files
 
 You have volunteered to archive all of the data from all the Code4Lib conferences up to now. Thanks! Unfortunately, the data were put together by lots of really enthusiastic volunteers, who were not given a complete file naming convention ahead of time. (Let’s pretend there aren’t a ton of metadata experts in the Code4Lib community who would prevent that from happening.) Everything is in CSV (comma-separated values) format.
@@ -118,7 +152,7 @@ So, the third command, above: it makes sense, now, right? That's an escaped spac
 
 What's kind of cool, though, is that this whole character swapping deal can also be done with a single command:
 
-`rename 's/[ +-]/_/g' *'
+`rename 's/[ +-]/_/g' *`
 
 The brackets are a game changer. They make what's inside them into what's known as a "character class," meaning that the regular expression will match one time, on any one thing inside them (_just_ one time, unless you use a modifier like `*`). They also change the rules, because, notice: the space and plus sign aren't escaped. I know, believe me, I _know_. But just roll with it, believe me, try each example for yourself (trust but verify!), and see that it works.
 
