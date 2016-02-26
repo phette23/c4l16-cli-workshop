@@ -18,6 +18,14 @@ An inordinate number of prompts will occur as `cpan` asks you for your entire pe
 > exec -l zsh
 ```
 
+Next, we need to install a python module named [pymarc](https://github.com/edsu/pymarc) which is used in some of the later scripts. Pymarc's actually quite similar to the Perl module we just installed; it provides programs with the means of parsing and editing MARC records. We install it using `pip`, python's package manager, but we also precede the command with `sudo`. `sudo` stands for "superuser do" and it's a way of running a command with elevated privileges. Often, when installing software or editing your system's configuration, you'll need to prefix a command with `sudo`. So let's run
+
+```sh
+> sudo pip install pymarc
+```
+
+to get started. You can confirm that this worked by running the `python` command to enter the python REPL, then writing `import pymarc` at the prompt. If no errors or messages appear, then you've successfully installed pymarc. You can exit the python REPL with the `exit()` function.
+
 Whew, hopefully all is well. We should be seeing a typical command line prompt now. Let's get to scripting.
 
 ## What Exactly Is a Script?
