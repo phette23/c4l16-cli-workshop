@@ -1,12 +1,16 @@
 # Get your own Nitrous.io account
 
+## Initial Setup
+
 Go to https://www.nitrous.io
 
 Click on "Get Started for Free"
 
 ![Get Started for Free](https://raw.githubusercontent.com/csheldonhess/c4l16-cli-workshop/master/images/getit.jpg "Click Get Started for Free")
 
-Fill in the form with any username and email you like (and can access, as it will send a confirmation message.) Pick a username and password that you'll remember on the day of the workshop. 😉
+Fill in the form with any username and email you like (and can access, as it will send a confirmation message.) Pick a username and password that you'll remember on the day of the workshop. 😉 It might make you do a CAPTCHA to prove you are not a robot.
+
+![Choose "create account"](https://raw.githubusercontent.com/csheldonhess/c4l16-cli-workshop/master/images/create_account.jpg "Choose 'Create Account'")
 
 They will send you an email. Click the link in the email to verify your account.
 
@@ -26,7 +30,7 @@ Now go get a coffee (or make a tutorial 😁) while the system processes.
 
 When it's finished, you might get a popup asking you for money. You can close it.
 
-![Say no to popups](https://raw.githubusercontent.com/csheldonhess/c4l16-cli-workshop/master/images/no_popup.jpg "Close the popup")
+![Say no to popups](https://raw.githubusercontent.com/csheldonhess/c4l16-cli-workshop/master/images/nopopup.jpg "Close the popup")
 
 Now a screen will come up, showing a nearly invisible (on my monitor, anyway) box with a plus sign. Click it.
 
@@ -53,3 +57,23 @@ Now you have a command line interface to play with.
 When you want to close it, you can just close the tab it's in, or you can (as Nitrous would no doubt prefer) choose "Close Workstation" from the menu at the top right of the screen.
 
 ![Close workstation](https://raw.githubusercontent.com/csheldonhess/c4l16-cli-workshop/master/images/stop.jpg "Close workstation")
+
+## Getting back in
+
+When you want to go back into Nitrous, return to https://www.nitrous.io, and this time click on "Log In"
+
+![Log in](https://raw.githubusercontent.com/csheldonhess/c4l16-cli-workshop/master/images/comeback.jpg "Log in")
+
+Log in with the username and password that you definitely remember from setting up your account. 😁
+
+![Log in](https://raw.githubusercontent.com/csheldonhess/c4l16-cli-workshop/master/images/login.jpg "Log in")
+
+Your IDE will likely be off, so you'll want to click the button with the power-on symbol, and choose "Start" from the drop-down.
+
+![Power, then Start](https://raw.githubusercontent.com/csheldonhess/c4l16-cli-workshop/master/images/start_ide.jpg "Power, then Start")
+
+The virtual box will turn on, and then you will be able to hit the "Open IDE" button.
+
+![Open IDE](https://raw.githubusercontent.com/csheldonhess/c4l16-cli-workshop/master/images/open_ide2.jpg "Open IDE")
+
+And you're in!

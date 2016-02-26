@@ -40,6 +40,9 @@ You can change the formatting of a file with `iconv`.
 
 (THIS IS NOT VERY USEFUL, THOUGHTS?)
 
+(MAYBE MORE USEFUL? 
+`echo "Êàêèå-òî êðàêîçÿáðû" | iconv -t latin1 | iconv -f cp1251 -t utf-8` outputs Какие-то кракозябры)
+
 ## Batch renaming files
 
 You have volunteered to archive all of the data from all the Code4Lib conferences up to now. Thanks! Unfortunately, the data were put together by lots of really enthusiastic volunteers, who were not given a complete file naming convention ahead of time. (Let’s pretend there aren’t a ton of metadata experts in the Code4Lib community who would prevent that from happening.) Everything is in CSV (comma-separated values) format.
