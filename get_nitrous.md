@@ -4,7 +4,7 @@ Using Nitrous will allow you to follow along with the workshop and do the exerci
 
 What we'll go over in the workshop is transferrable to Linux, UNIX, Mac, and (to some degree) Windows machines, and we hope you'll try the exercises on your own machine after the workshop is over. We're just removing one possible variable _during_ the workshop by having everyone work with the same tools.
 
-Nitrous does require a (working!) email address to use. They not send many email messages, once you're signed up, and they have been compliant with an unsubscribe request, in the past; but if you are uncomfortable giving them your email address, please contact the instructors. We'll set an account up for you, using one of our own email addresses.
+Nitrous does require a (working!) email address to use. They do not send many email messages, once you're signed up, and they have been compliant with unsubscribe requests, in the past; but, if you are uncomfortable giving them your email address, please contact the instructors. We'll set an account up for you, using one of our own email addresses.
 
 ## Initial Setup
 
