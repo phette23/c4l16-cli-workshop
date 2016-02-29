@@ -39,7 +39,7 @@ See the white rectangle (or it may display as a blinking cursor, on some browser
 
   Now use the command 
 
-  ```whoami```
+  `whoami`
 
   The system says your username is `nitrous`
 
@@ -51,18 +51,18 @@ See the white rectangle (or it may display as a blinking cursor, on some browser
 
   Type:
 
-  ```cd ..```
+  `cd ..`
 
-  ```pwd```  
+  `pwd`
 
   The output should be 
-  ```/home```
+  `/home`
 
   You've changed directories ("cd" - get it?), up a level (that's what ".." means). But what if you didn't really want to do that? What if you think, "No, I want to be in `/home/nitrous/` now"? No problem!
 
-  ```cd nitrous```
+  `cd nitrous`
   
-  ```pwd```
+  `pwd`
 
   Now, as you can see, you're back where you started.
 
@@ -70,9 +70,9 @@ See the white rectangle (or it may display as a blinking cursor, on some browser
 
   List stuff (write this out later; also, "list stuff" is probably not what that command literally means)
 
-  ```ls ..```
+  `ls ..`
 
-  ```ls c4l-cli-workshop```
+  `ls c4l-cli-workshop`
 
 ## Make stuff
 
@@ -80,7 +80,7 @@ See the white rectangle (or it may display as a blinking cursor, on some browser
 
   Eventually you are going to need a new directory for something; you can't just store everything in one place (or you _can_, but you probably wouldn't want to). Not a problem.
 
-  ```mkdir code4lib```
+  `mkdir code4lib`
 
   Now change directory into the directory you just created.
 	
