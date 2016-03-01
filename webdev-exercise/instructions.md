@@ -10,9 +10,92 @@ other potential programs/topics:
 
 ## HTTP Headers
 
-- checking headers e.g. for performance, security reasons
-- use `curl --head`
-- set up a basic monitoring script to confirm that your website(s) is up, send back the HTTP status code
+If you manage a lot of servers and web applications, you probably know about the importance of HTTP headers. Headers can affect all sorts of things, from how quickly your content loads to how a browser interprets the data you send to it. There are a few major headers you'll probably always want to check:
+
+* Caching headers, such as `Cache-Control`, can impact performance immensely by letting the browser know when it can use its internal cache instead of requesting fresh assets over HTTP
+* The Content-Type header, which is set to a resource's MIME type, is trivial…until it's not & everything breaks. For instance, newer MIME types like "text/cache-manifest" ([HTML5 appcache](https://en.wikipedia.org/wiki/Cache_manifest_in_HTML5)) and "application/x-web-app-manifest+json" ([Mozilla's web app manifest](https://developer.mozilla.org/en-US/Apps/Fundamentals/Manifest)) often aren't recognized automatically by servers & client applications won't recognize them without the appropriate Content-Type header
+* Security can be slightly improved by oscuring the server version in the `Server` header & removing application-specific headers like `X-Generator: Drupal` & `X-Powered-By: PHP/5.1.2`
+
+OK, so we get the picture, headers can be important. And sure, you can ivestigate them in your browser using the developer's tools. But sometimes looking at HTTP headers in the terminal is actually more convenient, for a variety of reasons, plus since our shell commands can be combined into larger scripts we might develop an automated way to check headers across _numerous_ sites and apps which just wouldn't be feasible with a browser GUI.
+
+How can we check HTTP headers? `curl` is our friend here, a program that stands for "Client URL library". `curl` can do all sorts of HTTP wizardry but we only need one command:
+
+```
+> curl --head http://example.com
+```
+
+This sends a HEAD (not a GET) HTTP request, which compliant servers respond to with _only_ their headers and no body content (e.g. no actual HTML file). That makes it easily the quickest way to check headers. The syntax of `curl` is `curl [option flags] [URL]` and there are numerous options; take a quick peak at `man curl` but don't get overwhelmed, we're not going to use that all.
+
+Take a moment to look at the output of `curl --head` on your own servers. Do you see anything interesting or odd? You can look for the issues outlined in the list above; caching headers, appropriate content types (hint: try something other than an HTML page, request a PDF document or image file), exposed server & framework versions.
+
+Next, let's think about something a little tricker: what if we want to view the headers for a particular page, but that page lies behind a redirect? To make things a bit clearer, I was testing `curl` by looking at the wordpress.com headers:
+
+```sh
+> curl --head http://wordpress.com
+HTTP/1.1 301 Moved Permanently
+Server: nginx
+Date: Tue, 01 Mar 2016 00:35:59 GMT
+Content-Type: text/html
+Content-Length: 178
+Connection: keep-alive
+Location: https://wordpress.com/
+X-ac: 1.sjc
+```
+
+As you can see from the 301 Moved Permanently response code, this site has been redirected! So the headers we're looking at aren't all that informative. Now, we could just send another manual request to the URL listed in the `location` header, but `curl` also has a built-in option for following redirects, no matter how many. Try the below:
+
+```sh
+> curl --head --location http://wordpress.com
+```
+
+What happens? How many HTTP requests did `curl` send & where did you end up? While following redirects is minimally useful in this example, it can _really_ help when troubleshooting odd website issues, like redirects through proxy servers, URL resolvers, or strangely architected vendor sites. Being able to actually follow a stream of redirects, while seeing the headers at each step, can be edifying.
+
+Do you have any redirects on your institution's website? Try following them! If you can't think of one, try a URL that's been sent through a link shortener (e.g. copy any URL off of Twitter).
+
+Finally, let's do something a bit more sophisticated. We want to write a command line script which will test a series of URLs & return their HTTP status codes. We can run this script after a major software upgrade to see that all our web pages are still rendering properly. Create a file ending in ".sh", either in the Nitrous editor or a command line editor like `nano` or `vim`, and write something akin to the following:
+
+```sh
+#!/usr/bin/env zsh
+URL_ONE='http://example.com'
+URL_TWO='http://dp.la'
+URL_THREE='http://lol.cat'
+
+status_check () {
+    echo "Testing URL ${1}"
+    curl --head --silent ${1} | grep 'HTTP/'
+}
+
+status_check ${URL_ONE}
+status_check ${URL_TWO}
+status_check ${URL_THREE}
+```
+
+There are a few things going on in this script, which I'll explain only briefly:
+
+* the first line gibberish tells the operating system how to run the script
+* the next three lines _initialize variables_ to a few different values
+* then we _define a function_ named "test"
+    + the `${1}` inside it refers to the first parameter passed to the function
+    + the `| grep` part means we're piping ("|") the `curl` response through `grep`, a pattern-matching tool that we've told to look for text matching the pattern "HTTP/"
+* then we execute the function three times, passing a different URL each time
+
+Writing that `status_check` function saved us a lot of redundant typing. There are still much, much more elegant ways to write such a script, but this is a good start without being too complicated. But we still need to make the script _executable_ by running the following before we can use it:
+
+```sh
+> chmod +x name-of-script.sh
+```
+
+That essentially changes the file's permissions such that we can run it without telling the operating system what program needs to interpret our code every time. We invoke a script simply by typing its full path into our terminal and hitting return, as if it was a command. But typing the full path `/home/nitrous/c4l16-cli-workshop-master/webdev-exercise/name-of-script.sh` every time we want to run the script is…tiring. I mean, I'm exhausted just from typing it into these instructions. Whew.
+
+Instead, let's use the `.` which refers to the parent of our current directory, it's much shorter! Now we just type:
+
+```sh
+./name-of-script.sh
+```
+
+Bingo! What prints out when you run this? Try giving a few different URLs as tests. What would you change if you wanted the script to follow redirects? What would you change if you only wanted to look for certain HTTP status codes in the script's output, say 400-level or 500-level errors? Try to insert a URL that 404s and print out _only its_ HTTP status code instead of all status' beginning with "HTTP/" as our original script does.
+
+How would you actually go about fixing improper headers that you've found? That's a topic for another workshop! But suffice to say you could research the configuration options of your particular server software (Apache, nginx, IIS, etc.) or pass along the information to your friendly local sys admin.
 
 ## RSYNC
 
