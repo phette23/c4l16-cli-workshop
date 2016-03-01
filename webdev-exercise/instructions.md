@@ -65,21 +65,21 @@ status_check () {
     curl --head --silent ${1} | grep 'HTTP/'
 }
 
-status_check ${URL_ONE}
-status_check ${URL_TWO}
-status_check ${URL_THREE}
+status_check "${URL_ONE}"
+status_check "${URL_TWO}"
+status_check "${URL_THREE}"
 ```
 
 There are a few things going on in this script, which I'll explain only briefly:
 
 * the first line gibberish tells the operating system how to run the script
 * the next three lines _initialize variables_ to a few different values
-* then we _define a function_ named "test"
+* then we _define a function_ named "status_check"
     + the `${1}` inside it refers to the first parameter passed to the function
     + the `| grep` part means we're piping ("|") the `curl` response through `grep`, a pattern-matching tool that we've told to look for text matching the pattern "HTTP/"
-* then we execute the function three times, passing a different URL each time
+* then we execute the function three times, passing it a different URL each time
 
-Writing that `status_check` function saved us a lot of redundant typing. There are still much, much more elegant ways to write such a script, but this is a good start without being too complicated. But we still need to make the script _executable_ by running the following before we can use it:
+Writing that `status_check` function saved us a lot of redundant typing. There are much more elegant ways to write such a script, but this is a good start without being too complicated. But we still need to make the script _executable_ by running the following before we can use it:
 
 ```sh
 > chmod +x name-of-script.sh
