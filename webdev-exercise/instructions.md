@@ -152,10 +152,6 @@ How would you actually go about fixing improper headers that you've found? That'
 
 syncing files, practice locally
 
-## Network Troubleshooting
-
-- `ping`, `traceroute` (_Nitrous doesn't have this installed_), `ifconfig`
-
 ## Explore even more!
 
 Well, if you've made it this far, you're probably pretty good at the command line. There's no a whole lot else we can add, but there are a few interesting tools we can present for you to either learn or spend some time configuring.
