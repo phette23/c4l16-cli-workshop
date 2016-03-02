@@ -6,7 +6,58 @@ other potential programs/topics:
 
 ## Downloading Files, Unpacking Archives
 
-- `wget` & `tar`
+If you've come this far, then you've already used the `wget` command to download a file from the web via the command line. Downloading, unpacking, and moving files can be very useful operations when administering web applications. Often, we need to pull down a module or plugin and unzip it to add it to our application, or we want to download images and other media assets hosted elsewhere.
+
+Let's walk through a simple example of downloading a Drupal module. Drupal, if you're not familiar, is an open source content management system with a large library of community-supported modules hosted on https://www.drupal.org. Let's download the [Biblio](https://www.drupal.org/project/biblio) module:
+
+```sh
+> wget https://ftp.drupal.org/files/projects/biblio-7.x-1.0-rc7.tar.gz
+```
+
+First, `wget` prints out a bunch of HTTP information, then a download progress bar appears, and finally we should have a "biblio-7.x-1.0-rc7.tar.gz" file sitting in this directory. Note that `wget` also tells you how large and what file type you're downloading ("Length: 337860 (330K) [application/octet-stream]"). But what is a ".tar.gz" file? It's a compressed archive of a directory structure, the same thing you could create in Windows or Mac by secondary-clicking a folder and choosing to compress it. We can unpack the archive with the `tar` command:
+
+```sh
+> tar -xvf biblio-7.x-1.0-rc7.tar.gz
+```
+
+"Whoa there, what could '-xvf' possibly mean?" I hear you asking. The `tar` command has a lot of options & remembering them all is tough. Even experienced command line users will commonly need to look up all the flags they want to use when unpacking a tarball. Here's a brief summary of each one:
+
+- -x means "extract" so we're telling `tar` that we want to _unpack_ an archive, as opposed to creating one
+- -v means "verbose" which is why `tar` printed out every file name in the package
+- -f means "read the archive from this file" so it is actually attached to the file name argument we pass afterwards
+
+A cleaner but more laborious way of writing the above `tar` command would be:
+
+```sh
+> tar -x -v -f biblio-7.x-1.0-rc7.tar.gz
+```
+
+At the end of this `tar`, we have a new "Biblio" folder full of files. If we truly were adding a module to Drupal, we would move this to the appropriate folder underneath the application's route (e.g. typically in sites/all/modules for Drupal 6 & 7). We can do this by running `mv biblio /drupal/sites/all/modules` where "drupal" is the folder we've installed the CMS in.
+
+Now we know how to download and move around a tarball, but what if we want to _create_ one, for instance so its easier for us to later download a set of text files over a shaky hotel WiFi network? There are only a few new flags to learn:
+
+```sh
+> tar -czf bundle.tar.gz instructions.md urls.txt
+```
+
+This will create (`-c`) a compressed (`-z` here, think z for "zip") archive named "bundle.tar.gz" (the argument following the `-f` flag) in the current directory, adding the files we list at the end of the command to it (in this case, a couple text files we've provided). Try bundling up all the Biblio module files again.
+
+With `wget`, we can also download _a list of URLs_, which might be convenient in certain situations. Try running this command:
+
+```sh
+> wget --input-file=urls.txt
+```
+
+A whole bunch of messages will print. Take a look at the urls.txt file & use `ls` to see what happened. The `--input-file` flag lets us download a list of URLs from a text file, in this case a set of JavaScript files for parsing ISBN numbers. But you can see how this would have many more applications, like pulling down a series of pages on a site or bulk downloading media assets.
+
+For practice, trying packing all the JavaScript files we just downloaded into a single .tar.gz archive. Hint: "\*.js" is a handy way to the shell's wildcard replacement to refer to _all_ .js files in the current directory.
+
+One last thing to note: we've learned a few `wget` flags here, but they're all rather long to type. I prefer to start with the long form of these flags because they're explicit; it's pretty clear what "input file" will refer to, whereas the letter "i" is a little enigmatic. But there are shortcuts available for every `wget` option, here are a few:
+
+- -h for --help (usage information)
+- -i for --input-file (read URLs from a file)
+- -O for --output-document (specify the downloaded file name)
+- -q for --quiet (no progress bar, fewer printed messages)
 
 ## HTTP Headers
 
@@ -100,10 +151,6 @@ How would you actually go about fixing improper headers that you've found? That'
 ## RSYNC
 
 syncing files, practice locally
-
-## Network Troubleshooting
-
-- `ping`, `traceroute` (_Nitrous doesn't have this installed_), `ifconfig`
 
 ## Explore even more!
 

@@ -1,0 +1,4 @@
+https://cdn.jsdelivr.net/isbnjs/1.0.0/isbn.min.js
+https://cdn.jsdelivr.net/isbnjs/1.0.0/isbn-groups.min.js
+https://cdn.jsdelivr.net/isbnjs/1.0.0/isbn-groups.js
+https://cdn.jsdelivr.net/isbnjs/1.0.0/isbn.js
