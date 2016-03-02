@@ -32,7 +32,9 @@ A cleaner but more laborious way of writing the above `tar` command would be:
 > tar -x -v -f biblio-7.x-1.0-rc7.tar.gz
 ```
 
-What if we want to _create_ a tar archive, for instance so its easier for us to later download a set of text files over a shaky hotel WiFi network? There are only a few new flags to learn:
+At the end of this `tar`, we have a new "Biblio" folder full of files. If we truly were adding a module to Drupal, we would move this to the appropriate folder underneath the application's route (e.g. typically in sites/all/modules for Drupal 6 & 7). We can do this by running `mv biblio /drupal/sites/all/modules` where "drupal" is the folder we've installed the CMS in.
+
+Now we know how to download and move around a tarball, but what if we want to _create_ one, for instance so its easier for us to later download a set of text files over a shaky hotel WiFi network? There are only a few new flags to learn:
 
 ```sh
 > tar -czf bundle.tar.gz instructions.md urls.txt
