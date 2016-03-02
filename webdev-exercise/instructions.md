@@ -52,7 +52,10 @@ For practice, trying packing all the JavaScript files we just downloaded into a 
 
 One last thing to note: we've learned a few `wget` flags here, but they're all rather long to type. I prefer to start with the long form of these flags because they're explicit; it's pretty clear what "input file" will refer to, whereas the letter "i" is a little enigmatic. But there are shortcuts available for every `wget` option, here are a few:
 
-- -i for --input-file
+- -h for --help (usage information)
+- -i for --input-file (read URLs from a file)
+- -O for --output-document (specify the downloaded file name)
+- -q for --quiet (no progress bar, fewer printed messages)
 
 ## HTTP Headers
 
