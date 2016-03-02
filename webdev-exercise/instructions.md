@@ -1,8 +1,6 @@
 # Web Developer Exercise
 
-other potential programs/topics:
-- configuring/editing `cron` jobs (_seems like Nitrous disables cron by default, hard to get running_)
-- managing remote server with `ssh`, `scp`, etc.
+Web developers in particular stand to benefit from the command line, because there's a wide swath of well-establish tools for working with servers and web applications. Below, we'll cover some common applications of command line tools and hopefully give you some interesting ideas for programs that you can use in every day in your work.
 
 ## Downloading Files, Unpacking Archives
 
@@ -148,7 +146,50 @@ Bingo! What prints out when you run this? Try giving a few different URLs as tes
 
 How would you actually go about fixing improper headers that you've found? That's a topic for another workshop! But suffice to say you could research the configuration options of your particular server software (Apache, nginx, IIS, etc.) or pass along the information to your friendly local sys admin.
 
+## SSH & SCP
+
+If there's one tool every web developer who deals with servers should know, it's `ssh` or the "secure shell". `ssh` allows you to connect to and control remote servers. Server operating systems often don't include a GUI, like Windows or OS X, so the command line is literally the only way to perform most operations.
+
+Unfortunately, setting up a server for folks to `ssh` into from a Nitrous account is a bit complicated and beyond the scope of this workshop. I'll introduce a bit of the syntax but we won't be able to play around much. The basic look of SSH is:
+
+```sh
+> ssh [user]@[domain]
+```
+
+That will connect you to a server; if you leave off the username & "@" portion, your shell username will be used (e.g. on Nitrous it's "nitrous", run `whoami` to find out your username). You'll be prompted for your password and then dropped into a shell session _on the server_. Pretty cool, right? You can run all the commands we've learned so far—inspecting the file system, moving things around, downloading from the web—on the server. It's also worth noting that, instead of connecting and creating a new shell session, and you can simply provide the text of a shell command for the server to run:
+
+```
+> ssh demo@example.com 'ls -l'
+```
+
+In this example, the user "demo" asks the example.com server to run the `ls` command with the `-l` flag; once "demo" has typed in their password, they should see a verbose directory listing of their home folder _on the server_ printed to their local terminal screen. This can be very handy if you just want to run one quick command.
+
+Next, any discussion of `ssh` warrants a mention of `scp`, which (as you might've guessed) is just our friend the `cp` copy command but done over a SSH connection. The `scp` syntax looks like:
+
+```sh
+> scp [user]@[starting server]:[file]  [user]@[destination server]:[destination file]
+```
+
+That copies a file from one server to another; realistically, we omit the entire user and server string off the first parameter because we'll use a file on our own local system. So for instance
+
+```sh
+> scp urls.txt demo@example.com:~/docs/list.txt
+```
+
+will copy the "urls.txt" file sitting in this folder and put it inside demo's home (`~`) folder, inside a directory named "docs", and rename it to "list.txt". Because copying a lot of files one at a time is too time-consuming, `scp` has a handy "recursive" flag `-r`
+
+A lot of the commands we've talked about, including `cp` and `rm`, also come with "recursive" `-r` flags.
+
+While we don't have a server for you to play with, I'll list a few exercises below. Feel free to continue to the `rsync` section, which you can do without connecting to a remote server.
+
+- set up a free SSH account for http://sdf.org/
+- try to `ssh` into sdf.org without using the link on the website
+
+Unfortunately, it looks like sdf.org doesn't have `scp` installed so we can't practice that.
+
 ## RSYNC
+
+`rsync` is like `scp`'s big sibling; it looks the same but is a lot more powerful, with many more options.
 
 syncing files, practice locally
 
