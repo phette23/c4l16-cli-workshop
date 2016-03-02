@@ -6,7 +6,19 @@ OK, here we go!
 
 ## Setup
 
-(Get a tarball with junkfiles.py and anything else I need you to have. Untar it. Get to the right directory.)
+Navigate (`cd`) to `/home/nitrous/c4l16-cli-workshop/archiving-exercise/`
+
+Look in the directory (`ls`), just to see what's there. 
+
+Run the following command:
+
+./makefiles.py
+
+(When it's finished, it will output one word, "Complete.")
+
+Congratulations, you just ran a Python script from the command line! 👍
+
+Now look in the directory again, and notice there's a new subdirectory, `c4lfiles`. You'll use this during the "Batch Renaming Files" exercise, later. For now, we're going to do fun things with another file in the directory, `lorem.txt`.
 
 ## File formatting issues
 
@@ -14,19 +26,19 @@ Let's say you've got some files that aren't in the right character set. They're 
 
 You can look at what format your file is with the `file` command.
 
-Navigate to (SOME DIRECTORY) and type the following:
+Make sure you're in `/home/nitrous/c4l16-cli-workshop/archiving-exercise/`, and type the following:
 
 `file -bi lorem.txt`
 
-The `-b` flag tells it to be brief, not to put the filename at the beginning of the output.
+This tells you the _type_ of the file `lorem.txt`. The `-b` flag tells it to be brief, which just means it won't put the filename at the beginning of the output.
 
-Including `-i` changes the format of its output to include (MIME type)[https://en.wikipedia.org/wiki/Media_type] along with, if applicable, the character encoding. To see the difference, go ahead and also type
+Including `-i` changes the format of its output to include its (MIME type)[https://en.wikipedia.org/wiki/Media_type] along with, if applicable, the character encoding. To see the difference, go ahead and also type
 
 `file -b lorem.txt` or `file lorem.txt`
 
 Sometimes having the more precise output is helpful, so getting in the habit of using `-bi` is not a bad choice.
 
-So we know our file is UTF-8. 
+So now we know our file is UTF-8. 
 
 Look inside the file. There are a number of ways to do this, but my favorite is `more`. Here's the command for that:
 
@@ -34,30 +46,39 @@ Look inside the file. There are a number of ways to do this, but my favorite is 
 
 You can scroll slowly by hitting Enter, or quickly by hitting the spacebar. If you are tired of scrolling, just type the letter `q`.
 
-Digression: the command `clear` will remove all the old commands and files you've viewed from your field of view, giving you a nice, clean command line interface. Feel free to use it at any point. You can hit the up arrow to get to your last command, and use up and down to scroll back through earlier commands.
+Digression: the command `clear` will remove all of the old commands and text from your field of view, giving you a nice, clean command line interface. Feel free to use it at any point. You can still hit the up arrow to get to your last command, and then use up and down to scroll back through earlier commands. Nothing's lost; it just makes your screen cleaner.
 
-You can change the formatting of a file with `iconv`.
+You can also _change_ the formatting of a file with `iconv`.
 
 `iconv -f UTF-8 -t UTF-16  lorem.txt > lorem2.txt`
 
-(THIS IS NOT VERY USEFUL, THOUGHTS?)
+This makes a copy of `lorem.txt`, in UTF-16 format instead of UTF-8, and saves it as `lorem2.txt`.
 
-(MAYBE MORE USEFUL? 
-`echo "Êàêèå-òî êðàêîçÿáðû" | iconv -t latin1 | iconv -f cp1251 -t utf-8` outputs Какие-то кракозябры)
+Confirm that it changed using the `file` command on `lorem2.txt`.
+
+Another cool usage of iconv is on strings of text, like so:
+
+`echo "Êàêèå-òî êðàêîçÿáðû" | iconv -t latin1 | iconv -f cp1251 -t utf-8` 
+
+This should output `Какие-то кракозябры`
+
+What that command is doing is using pipes (`|`) in order to write (`echo`) a string (`Êàêèå-òî êðàêîçÿáðû`) to the command `iconv`, first to convert it to encoding `latin1`, then taking the output of that and feeding it to `iconv` again, to convert it from the encoding `cp1251` to `utf-8`.
+
+(The specifics of why latin1 and cp1251 are used seemingly interchangeably like that are left for those interested enough to dig in. The finer points of character encodings are somewhat beyond the scope of this workshop.)
+
+This is really useful if you have garbled text (or a whole file of garbled text), and you know what encoding it _should_ be in, to un-garble it.
 
 ## Batch renaming files
 
 Let's pretend you have volunteered to archive all of the data from all the Code4Lib conferences up to now. Thanks! Unfortunately, the data were put together by lots of really enthusiastic volunteers, who were not given a complete file naming convention ahead of time. (Let’s pretend there aren’t a ton of metadata experts in the Code4Lib community who would prevent that from happening.) Everything is in CSV (comma-separated values) format.
 
-Navigate to the folder (SOME FOLDER) Run the following command:
-
-`./junkfiles.py`
-
-Now, change directory (`cd`) to the `c4lfiles` directory, and look at what's in there (`ls`).
+Navigate to the `c4lfiles` directory (under `/home/nitrous/c4l16-cli-workshop/archiving-exercise/`), and look at what's in there (`ls`).
 
 As you can see, there are about 100 files there, all from different years. They're kind of a mess. Renaming all of these files to all use the same naming convention would be tedious and take quite a while to do by hand, but we're going to clean this whole thing up with less than five minutes of work.
 
-Now, there are a number of ways to do bulk edits of filenames on a CLI, including writing a script in Python or bash, or doing clever things with UNIX's find command. These are all totally valid. We’ll be using the `rename` command today.
+Now, there are a number of ways to do bulk edits of filenames on a CLI, including writing a script in Python or bash, or doing clever things with UNIX's find command. These are all totally valid. We’ll be using the `rename` command today. 
+
+If you're working through this on a Mac, rather than on Nitrous, you'll want to [follow these directions](http://macappstore.org/rename/) first. And there'll be one other little snag, later, but we'll get there when we get there. 😃
 
 ### Rename
 
@@ -171,7 +192,7 @@ Now, run either the three separate commands or the combined command (using `-n` 
 
 The volunteers all capitalized Code4Lib differently, just as they likely were split on how it's pronounced. Capitalization can affect how things are alphabetized in some systems, and it just looks messy; so let's make everything lowercase, shall we?
 
-Note: This (apparently) won't work on a Mac, because Macs seem to have case-insensitive file naming. (I'm not bitter. This didn't waste _hours_ of my time. Nope.) It works fine on Nitrous and many other systems with command line interfaces, so it's definitely worth your time to find out about. Just know that, on some systems, it'll fail with a message along the lines of "'Code4Lib_programs_2014.csv' not renamed: 'code4lib_programs_2014.csv' already exists."
+Note: We've reached the other snag for Mac users. This (apparently) won't work on a Mac, because Macs seem to have case-insensitive file naming. (I'm not bitter. This didn't waste _hours_ of my time. Nope.) It works fine on Nitrous and many other systems with command line interfaces, so it's definitely worth your time to find out about. Just know that, on some systems, it'll fail with a message along the lines of "'Code4Lib_programs_2014.csv' not renamed: 'code4lib_programs_2014.csv' already exists."
 
 Anyway, the command:
 
@@ -197,9 +218,19 @@ This is the only example that relies on the others all having been run first; th
 
 `rename 's/([a-z]*)_([a-z]*)_([0-9]*)/$1_$3_$2/' *`
 
-Nothing in this command is new, except for using multiple groups. It's just more complex-_looking_.
+Nothing in this command is new, except for using multiple groups. It's just more complex-_looking_. But if you break it down, it makes sense, right?
 
+## Grep
 
+Grep is an incredibly useful tool for finding a particular word or phrase within a text file.
+
+Let's say you have a copy of the Declaration of Human Rights handy on your machine (you _do_, actually: `human_rights.txt`), and you want to find the part where it talks about freedom of expression, without having to read the whole thing.
+
+`grep -i "freedom of opinion and expression" human_rights.txt`
+
+## Find
+
+## Nano
 
 
 
