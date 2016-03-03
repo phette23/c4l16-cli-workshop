@@ -184,8 +184,11 @@ While we don't have a server for you to play with, I'll list a few exercises bel
 
 - set up a free SSH account for http://sdf.org/
 - try to `ssh` into sdf.org without using the link on the website
+- if you have access to a server, try to `ssh` in & `scp` files to it
+    + upgrade from logging in with your password to logging in with a cryptographic key, `ssh-copy-id` can really help here
+    + try setting up [a config file](http://nerderati.com/2011/03/17/simplify-your-life-with-an-ssh-config-file/) of SSH aliases in ~/.ssh/config
 
-Unfortunately, it looks like sdf.org doesn't have `scp` installed so we can't practice that.
+Unfortunately, it looks like sdf.org doesn't have `scp` installed so we can't practice that without access to another server.
 
 ## RSYNC
 
