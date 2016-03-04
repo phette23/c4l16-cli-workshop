@@ -58,9 +58,5 @@ zsh: sure you want to delete all the files in /home/nitrous/mydirectory [yn]? y
 ➜  ~  rmdir mydirectory
 ➜  ~  ls
 cli-c4l  cli-workshop  code  thing3.txt
-➜  ~  cd cli-workshop/cataloging-exercise
-➜  cataloging-exercise  more instructions.md
- [[wall of text, hit q to escape]]
- ➜  cataloging-exercise  less instructions.md
- [[wall of text, hit q to escape]]
 
+After this it's all looking at big text files, not as useful in this format. 
