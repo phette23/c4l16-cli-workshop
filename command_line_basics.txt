@@ -1,0 +1,66 @@
+If you type every command we ask you to in the slides, in order, this is what it looks like. "➜ [anything]" indicates the prompt; any line that doesn't start with "➜" is output.
+
+➜  ~  mv c4l16-cli-workshop-master cli-workshop
+➜  ~  whoami
+nitrous
+➜  ~  pwd
+/home/nitrous
+➜  ~  cd ..
+➜  /home  pwd
+/home
+➜  /home  cd nitrous/cli-workshop
+➜  cli-workshop  pwd
+/home/nitrous/cli-workshop
+➜  cli-workshop  cd ~
+➜  ~  pwd
+/home/nitrous
+➜  ~  cd .
+➜  ~  pwd
+/home/nitrous
+➜  ~  ls
+cli-c4l  cli-workshop  code
+➜  ~  ls -a
+.             .cache        .cpan       .npm        .tmux.conf  .zcompdump-test-run-160117-5.0.2
+..            cli-c4l       .gitconfig  .oh-my-zsh  .vim        .zsh_history
+.bash_logout  cli-workshop  .heroku     .profile    .vimrc      .zshrc
+.bashrc       code          .hushlogin  .ssh        .zcompdump
+➜  ~  ls ..
+nitrous
+➜  ~  ls cli-workshop/cataloging-exercise
+batch-analysis.sh  exercise-two.py  MARCgrep.pl        pm-script.py
+example.mrc        instructions.md  non-exe-script.sh  script.sh
+➜  ~  touch thing.txt
+➜  ~  ls
+cli-c4l  cli-workshop  code  thing.txt
+➜  ~  mkdir mydirectory
+➜  ~  ls
+cli-c4l  cli-workshop  code  mydirectory  thing.txt
+➜  ~  mv thing.txt mydirectory
+➜  ~  ls
+cli-c4l  cli-workshop  code  mydirectory
+➜  ~  ls mydirectory
+thing.txt
+➜  ~  cp mydirectory/thing.txt thing2.txt
+➜  ~  ls
+cli-c4l  cli-workshop  code  mydirectory  thing2.txt
+➜  ~  cp thing2.txt thing3.txt
+➜  ~  ls
+cli-c4l  cli-workshop  code  mydirectory  thing2.txt  thing3.txt
+➜  ~  rm thing2.txt
+➜  ~  ls
+cli-c4l  cli-workshop  code  mydirectory  thing3.txt
+➜  ~  rm mydirectory
+rm: cannot remove ‘mydirectory’: Is a directory
+➜  ~  ls *.txt
+thing3.txt
+➜  ~  rm mydirectory/*
+zsh: sure you want to delete all the files in /home/nitrous/mydirectory [yn]? y
+➜  ~  rmdir mydirectory
+➜  ~  ls
+cli-c4l  cli-workshop  code  thing3.txt
+➜  ~  cd cli-workshop/cataloging-exercise
+➜  cataloging-exercise  more instructions.md
+ [[wall of text, hit q to escape]]
+ ➜  cataloging-exercise  less instructions.md
+ [[wall of text, hit q to escape]]
+
