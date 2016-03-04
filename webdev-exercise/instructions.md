@@ -18,7 +18,7 @@ First, `wget` prints out a bunch of HTTP information, then a download progress b
 > tar -xvf biblio-7.x-1.0-rc7.tar.gz
 ```
 
-"Whoa there, what could '-xvf' possibly mean?" I hear you asking. The `tar` command has a lot of options & remembering them all is tough. Even experienced command line users will commonly need to look up all the flags they want to use when unpacking a tarball. Here's a brief summary of each one:
+"Whoa there, what could '-xvf' possibly mean?" I hear you ask. The `tar` command has a lot of options & remembering them all is tough. Even experienced command line users commonly need to look up all the flags they want to use for some of these programs. Here's a brief summary of each one:
 
 - -x means "extract" so we're telling `tar` that we want to _unpack_ an archive, as opposed to creating one
 - -v means "verbose" which is why `tar` printed out every file name in the package
@@ -73,7 +73,7 @@ How can we check HTTP headers? `curl` is our friend here, a program that stands 
 > curl --head http://example.com
 ```
 
-This sends a HEAD (not a GET) HTTP request, which compliant servers respond to with _only_ their headers and no body content (e.g. no actual HTML file). That makes it easily the quickest way to check headers. The syntax of `curl` is `curl [option flags] [URL]` and there are numerous options; take a quick peak at `man curl` but don't get overwhelmed, we're not going to use that all.
+This sends a HEAD (not a GET) HTTP request, which compliant servers respond to with _only_ their headers and no body content (e.g. no actual HTML file). That makes it easily the quickest way to check headers. The syntax of `curl` is `curl [option flags] [URL]` and there are numerous options; take a quick peak at `man curl` but don't get overwhelmed, we're not going to use them all.
 
 Take a moment to look at the output of `curl --head` on your own servers. Do you see anything interesting or odd? You can look for the issues outlined in the list above; caching headers, appropriate content types (hint: try something other than an HTML page, request a PDF document or image file), exposed server & framework versions.
 
@@ -176,15 +176,19 @@ That copies a file from one server to another; realistically, we omit the entire
 > scp urls.txt demo@example.com:~/docs/list.txt
 ```
 
-will copy the "urls.txt" file sitting in this folder and put it inside demo's home (`~`) folder, inside a directory named "docs", and rename it to "list.txt". Because copying a lot of files one at a time is too time-consuming, `scp` has a handy "recursive" flag `-r`
+will copy the "urls.txt" file sitting in this folder and put it inside demo's home (`~`) folder, inside a directory named "docs", and rename it to "list.txt". Because copying a lot of files one at a time is too time-consuming, `scp` has a handy "recursive" flag `-r`:
 
-A lot of the commands we've talked about, including `cp` and `rm`, also come with "recursive" `-r` flags.
+```sh
+> scp -r . demo@example.com:~/docs
+```
+
+The dot `.` here refers to the current directory. A lot of the commands we've talked about, including `cp` and `rm`, also come with "recursive" `-r` flags. It is a common design pattern worth looking for in command line tools.
 
 While we don't have a server for you to play with, I'll list a few exercises below. Feel free to continue to the `rsync` section, which you can do without connecting to a remote server.
 
 - set up a free SSH account for http://sdf.org/
 - try to `ssh` into sdf.org without using the link on the website
-- if you have access to a server, try to `ssh` in & `scp` files to it
+- if you have access to your own server, try to `ssh` in & `scp` files to it
     + upgrade from logging in with your password to logging in with a cryptographic key, `ssh-copy-id` can really help here
     + try setting up [a config file](http://nerderati.com/2011/03/17/simplify-your-life-with-an-ssh-config-file/) of SSH aliases in ~/.ssh/config
 
@@ -192,15 +196,15 @@ Unfortunately, it looks like sdf.org doesn't have `scp` installed so we can't pr
 
 ## RSYNC
 
-`rsync` is like `scp`'s big sibling; it looks the same but is a lot more powerful, with many more options. `rsync` doesn't just naively copy files into place, it uses compression and duplication checks to ensure two separate directories mirror each other with as little data transfer as possible. Luckily for us, it also works _locally_—you can sync two folders on the same machine. Let's practice some with the "source" and "destination" folders inside this directory.
+`rsync` is `scp`'s big sibling; it looks the same but is a lot more powerful, with many more options. `rsync` doesn't just naïvely copy files into place, it uses compression and duplication checks to ensure two separate directories mirror each other with as little data transfer as possible. Luckily for us, it also works _locally_—you can sync two folders on the same machine. Let's practice some with the "source" and "destination" folders inside this directory.
 
-I'm going to go over several of the `rsync` settings, then leave it to you to determine how to achieve a set of tasks I'll below. Here is the general syntax of the program:
+I'm going to go over several of the `rsync` settings, then leave it to you to determine how to achieve a set of tasks provided below. Here is the general syntax of the program:
 
 ```sh
 > rsync [user]@[domain]:[files] [user]@[another domain]:files
 ```
 
-Look familiar? It has the same basic structure as `scp`. Try doing a simple `rsync` between the "source" and "destination" folders. We get an error, "skipping directory source". Try copying _all the files inside "source"_ with `rsync source/* destination`. What differences do you see between the two afterwards? Really investigate—go inside each and use `ls -al` (verbose directory listing) to see the permissions, files, and folders present in each. It's apparent that we haven't really "synched" them as many differences are present. We need to use what sets `rsync` apart—its long list of powerful options, which we specify as flags before the source/destination locations.
+Look familiar? It follows the structure of `scp`. Try doing a simple `rsync` between the "source" and "destination" folders. We get an error, "skipping directory source". Try copying _all the files inside "source"_ with `rsync source/* destination`. What differences do you see between the two afterwards? Really investigate—go inside each and use `ls -al` (verbose directory listing) to see the permissions, files, and folders present in each. It's apparent that we haven't really "synched" them as many differences are present. We need to use what sets `rsync` apart—its long list of powerful options, which we specify as flags listed before the source/destination locations.
 
 - `-z` or `--compress` uses _compression_ to transfer fewer bytes
 - `-v` or `--verbose` increases the _verbosity_ of the program's output
@@ -208,18 +212,18 @@ Look familiar? It has the same basic structure as `scp`. Try doing a simple `rsy
 - `-c` or `--checksum` will use checksums to determine if files differ before transferring them
 - `-l` or `--links` copies _symbolic links_ (think of: shortcuts, aliases) too
 - `-p` or `--perms` preserves _permissions_ between the source and destination
-- `-n` or `--dry-run` is handy, it does a _dry run_ that shows us what would happen without modifying anything
-- `--delete` _deletes_ extraneous files in the destination that aren't present in the source
+- `-n` or `--dry-run` shows us what a given command would do without actually modifying anything
+- `--delete` _deletes_ extraneous files in the destination that are no longer present in the source
 - `--exclude=*.txt` _excludes_ files ending in ".txt" or any other provided pattern, while
 - `--exclude-from=file.txt` _excludes_ files matching any pattern listed in file.txt
 
-Whew, that's a lot of options. Luckily, there's one mecha-Voltron _archive mode_ option which enables several things at once:
+Whew, that's a lot of options! Luckily, there's one mecha-Voltron _archive mode_ option which enables several things at once:
 
 ```sh
 > rsync -av source destination
 ```
 
-Yes, the `-a` alone _implies_ a bunch of other options, most of which are the sensible defaults we always want to use: recursive copying, maintaining permissions/ownership/symbolic links, etc.
+Yes, the `-a` alone _implies_ a bunch of other options, most of which are sensible defaults we always want to use: recursive copying, maintaining permissions/ownership/symbolic links, etc.
 
 So, without further ado, here are some tasks for you. Try accomplishing them with `rsync` and then, if you feel like torturing yourself, try using `cp` to achieve the same (to get a sense of why a tool like `rsync` is more suitable for complex copy operations). Make sure you are a) always using the quickest, most optimal transfer (i.e. use compression) and b) using "verbose" mode to see what's going on.
 
@@ -228,6 +232,7 @@ So, without further ado, here are some tasks for you. Try accomplishing them wit
 - change a file in the source directory (doesn't matter which one) & then sync them again
     + how many files did `rsync` transfer?
     + how much faster was the `rsync` than the first?
+- repeat the last two operations, but use the "Biblio" module we download earlier instead of "source"
 - copy all the files & directories in the "source" directory into the destination directory _except for the "secret" file_
 - copy all the files & directories in the "source" directory into the destination directory _except for the "secret" file and one other file of your choice_ (use an exclude list file)
 - delete a file (other than "secret") from the "source" directory, then use `rsync` to sync "destination" such that the corresponding file is deleted as well
