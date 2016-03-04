@@ -1,6 +1,6 @@
 # Web Developer Exercise
 
-Web developers in particular stand to benefit from the command line, because there's a wide swath of well-establish tools for working with servers and web applications. Below, we'll cover some common applications of command line tools and hopefully give you some interesting ideas for programs that you can use in every day in your work.
+Web developers in particular stand to benefit from the command line, because there's a wide swath of well-established tools for working with servers and web applications. Below, we'll cover some common applications of command line tools and hopefully give you some interesting ideas for programs that you can use every day in your work.
 
 ## Downloading Files, Unpacking Archives
 
@@ -192,18 +192,57 @@ Unfortunately, it looks like sdf.org doesn't have `scp` installed so we can't pr
 
 ## RSYNC
 
-`rsync` is like `scp`'s big sibling; it looks the same but is a lot more powerful, with many more options.
+`rsync` is like `scp`'s big sibling; it looks the same but is a lot more powerful, with many more options. `rsync` doesn't just naively copy files into place, it uses compression and duplication checks to ensure two separate directories mirror each other with as little data transfer as possible. Luckily for us, it also works _locally_—you can sync two folders on the same machine. Let's practice some with the "source" and "destination" folders inside this directory.
 
-syncing files, practice locally
+I'm going to go over several of the `rsync` settings, then leave it to you to determine how to achieve a set of tasks I'll below. Here is the general syntax of the program:
+
+```sh
+> rsync [user]@[domain]:[files] [user]@[another domain]:files
+```
+
+Look familiar? It has the same basic structure as `scp`. Try doing a simple `rsync` between the "source" and "destination" folders. We get an error, "skipping directory source". Try copying _all the files inside "source"_ with `rsync source/* destination`. What differences do you see between the two afterwards? Really investigate—go inside each and use `ls -al` (verbose directory listing) to see the permissions, files, and folders present in each. It's apparent that we haven't really "synched" them as many differences are present. We need to use what sets `rsync` apart—its long list of powerful options, which we specify as flags before the source/destination locations.
+
+- `-z` or `--compress` uses _compression_ to transfer fewer bytes
+- `-v` or `--verbose` increases the _verbosity_ of the program's output
+- `-r` or `--recursive` makes the command _recursive_, meaning that it'll transfer subdirectories and their contents as well
+- `-c` or `--checksum` will use checksums to determine if files differ before transferring them
+- `-l` or `--links` copies _symbolic links_ (think of: shortcuts, aliases) too
+- `-p` or `--perms` preserves _permissions_ between the source and destination
+- `-n` or `--dry-run` is handy, it does a _dry run_ that shows us what would happen without modifying anything
+- `--delete` _deletes_ extraneous files in the destination that aren't present in the source
+- `--exclude=*.txt` _excludes_ files ending in ".txt" or any other provided pattern, while
+- `--exclude-from=file.txt` _excludes_ files matching any pattern listed in file.txt
+
+Whew, that's a lot of options. Luckily, there's one mecha-Voltron _archive mode_ option which enables several things at once:
+
+```sh
+> rsync -av source destination
+```
+
+Yes, the `-a` alone _implies_ a bunch of other options, most of which are the sensible defaults we always want to use: recursive copying, maintaining permissions/ownership/symbolic links, etc.
+
+So, without further ado, here are some tasks for you. Try accomplishing them with `rsync` and then, if you feel like torturing yourself, try using `cp` to achieve the same (to get a sense of why a tool like `rsync` is more suitable for complex copy operations). Make sure you are a) always using the quickest, most optimal transfer (i.e. use compression) and b) using "verbose" mode to see what's going on.
+
+- first, wipe out the "destination" directory & remake an empty one with `rm -rf destination; mkdir destination` (the semicolon just separates two commands on the same line)
+- copy all the files & directories in the "source" directory into the destination directory (such that "source/code.sh" becomes "destination/code.sh", etc.)
+- change a file in the source directory (doesn't matter which one) & then sync them again
+    + how many files did `rsync` transfer?
+    + how much faster was the `rsync` than the first?
+- copy all the files & directories in the "source" directory into the destination directory _except for the "secret" file_
+- copy all the files & directories in the "source" directory into the destination directory _except for the "secret" file and one other file of your choice_ (use an exclude list file)
+- delete a file (other than "secret") from the "source" directory, then use `rsync` to sync "destination" such that the corresponding file is deleted as well
+- wipe out the "destination" directory again, then try to sync the "source" folder _inside_ of it (e.g. such that source and destination/source are identical). How did you have to change the `rsync` command?
+
+That's it, hopefully you've gotten some good `rsync` practice in. It's an incredibly useful command for creating backups or maintaining parity between development, staging, and production web servers. If you do have `ssh` access, I recommend trying to set up a basic `rsync` script to help you with a tedious copying task you perform periodically.
 
 ## Explore even more!
 
-Well, if you've made it this far, you're probably pretty good at the command line. There's no a whole lot else we can add, but there are a few interesting tools we can present for you to either learn or spend some time configuring.
+Well, if you've made it this far, you're probably pretty good at the command line. There's not a whole lot else we can add, but there are a few interesting tools we can present for you to either learn or spend some time configuring.
 
 Does your library use the **Drupal** CMS? Take a look at setting up Drush: http://www.drush.org/en/master/
 
-Drush is the "Drupal shell" and it allows you to perform common administrative tasks from the command line. You can also set up aliases using a configuration file to run command on external servers. If you're already able to `ssh` into your own servers, give settings up drush a try, and if not take a look at the documentation and see if it'll be useful to you.
+Drush is the "Drupal shell" and it allows you to perform common administrative tasks from the command line. You can also set up aliases using a configuration file to run command on external servers. If you're able to `ssh` into your own servers, give setting up `drush` a try, and if not take a look at the documentation and see if it'll be useful to you.
 
 There's a similar project for the **Wordpress** CMS, Wordpress-cli: http://wp-cli.org/
 
-Same thing here; try setting this up on your web servers if you have access, or reading through the documentation if you don't.
+Same thing here; try setting this up on your servers if you have access, or reading through the documentation if you don't.
