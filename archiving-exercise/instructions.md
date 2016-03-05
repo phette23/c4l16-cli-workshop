@@ -20,7 +20,9 @@ Run the following command (don't type the >):
 
 Congratulations, you just ran a Python script from the command line! 👍
 
-Now look in the directory again, and notice there's a new subdirectory, `c4lfiles`. You'll use this during the "Batch Renaming Files" exercise, later. For now, we're going to do fun things with another file in the directory, `lorem.txt`.
+Digression: "Why," you might ask, "did we stick `./` in front of the name of the script?" Good question! When you want to run a script, you need to specify the full name of the script, which includes the path. In this case, you could also run it using '/home/nitrous/cli-workshop/archive-exercise/makefiles.py`, but that's a lot to type. And, as we mentioned earlier, when you want to refer to the current working directory, `.` is great shorthand, much easier to type.
+
+Now, look in the directory again, and notice there's a new subdirectory, `c4lfiles`. You'll use this during the "Batch Renaming Files" exercise, later. For now, we're going to do fun things with another file in the directory, `lorem.txt`.
 
 ## File formatting issues
 
@@ -238,9 +240,9 @@ The part in quotation marks is a regular expression (in quotes because of the sp
 
 And then `human_rights.txt` is the file you're searching within. But you can also search multiple files at once.
 
-`> grep -in grep *`
+`> grep -in "grep" *`
 
-It shows you this section of these directions (we did mention you had a copy of these directions in this folder, right? because you do). Funny, right? 😃
+It shows you this section of these directions (we did mention you had a copy of these directions in this folder, right? because you do). Funny, right? 😃 
 
 ## Find
 
@@ -256,6 +258,8 @@ So if you want to make a list of files named, for instance, "instructions.md" in
 
 `> find /home/nitrous/cli-workshop/ -name instructions.md -print
 
+(It should show you the names and full paths of three files.)
+
 You can do some really powerful stuff with `find`, including searching for files that were accessed on a certain date (not a super useful example to run, right now) or modified on a certain date or are a certain size.
 
 Here's a command to look at everything in our workshop directory that was modified today:
@@ -264,7 +268,9 @@ Here's a command to look at everything in our workshop directory that was modifi
 
 But you see that `-print` flag? That implies that there are other things you can do, besides printing the list, right? Right. 😃
 
-You can execute commands on all of the files you `find`, which is a lot of power to have in one command... It also explains why I said you could replace `rename`, above, with a cleverly-run `find` command. (That's an exercise for any of you who want to try it. There's more information on `find` [here](https://kb.iu.edu/d/admm).)
+`-mtime` is "the time when the file was modified," and `-1` is, confusingly, not actually a flag; it means "less than one day ago"; its inverse is `+1`, meaning "more than a day ago." How do you think you'd get the files modified yesterday?
+
+You can execute commands on all of the files you `find`, which is a lot of power to have in one command... It also explains why I said you could replace `rename`, above, with a cleverly-run `find` command. (That's an exercise for any of you who want to try it.) There's more information on `find` [here](https://kb.iu.edu/d/admm).
 
 ## Nano
 

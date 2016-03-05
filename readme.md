@@ -6,6 +6,8 @@ Please [get an account on Nitrous](https://github.com/csheldonhess/c4l16-cli-wor
 
 ## During the workshop
 
-We will make our slides available (when they're closer to ready 😉), and you'll be able to follow along with the commands from the slides [here](https://github.com/csheldonhess/c4l16-cli-workshop/blob/master/command_line_basics.txt), as well.
+The slides are available [here](http://bit.ly/c4l-cli-slides), and you can follow along with the commands from the slides and their output [here](https://github.com/csheldonhess/c4l16-cli-workshop/blob/master/command_line_basics.txt).
 
-The three exercises we've prepared are geared toward [archivists](https://github.com/csheldonhess/c4l16-cli-workshop/tree/master/archiving-exercise/instructions.md), [catalogers](https://github.com/csheldonhess/c4l16-cli-workshop/tree/master/cataloging-exercise/instructions.md), and [web developers](https://github.com/csheldonhess/c4l16-cli-workshop/tree/master/webdev-exercise/instructions.md), but we hope to leave you time to do more than one. 😃 We definitely welcome _anyone_ to work through any of them that seem interesting. 
+The three exercises we've prepared are geared toward [archivists](https://github.com/csheldonhess/c4l16-cli-workshop/tree/master/archiving-exercise/instructions.md), [catalogers](https://github.com/csheldonhess/c4l16-cli-workshop/tree/master/cataloging-exercise/instructions.md), and [web developers](https://github.com/csheldonhess/c4l16-cli-workshop/tree/master/webdev-exercise/instructions.md), but each exercise has useful tools for everyone. We hope to leave you time to do more than one. 😃 
+
+We welcome you to work through any of the exercises that seem interesting to you!
