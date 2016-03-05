@@ -295,7 +295,7 @@ Create a new text file named mytext.txt:
 
 Type a little bit, whatever you want, it doesn't matter.
 
-The "^" in front of each letter before the command refers to the `ctrl` key. So __`ctrl-x`__ will let you exit the text editor, at which point it asks if you want to save. Choose "Y" to save your file, and if you hit "Enter" it will save as "mytext.txt." (You can also change the filename at this point, if you prefer.) Once you've saved, feel free to list the files in the directory (`ls`) to convince yourself you made a text file.
+The "^" in front of each letter (in the menu options at the bottom of the screen) refers to the `ctrl` key. So __`ctrl-x`__ will let you exit the text editor, at which point it asks if you want to save. Choose "Y" to save your file, and if you hit "Enter" it will save as "mytext.txt." (You can also change the filename at this point, if you prefer.) Once you've saved, feel free to list the files in the directory (`ls`) to convince yourself you made a text file.
 
 Remember how `grep -n` was cool because it gave you a line number (99, in the case of what we searched)? Here's why we like that:
 
