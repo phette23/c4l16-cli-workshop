@@ -1,6 +1,6 @@
 # Command line tools for archivists
 
-There are numerous ways archivists can benefit from command line tools. In particular, the exercises below will cover conversion of file formats and character encodings, batch renaming of files, searching for files and text within them, and making quick edits to text files. Parts of the [cataloger](https://github.com/csheldonhess/c4l16-cli-workshop/tree/master/cataloging-exercise) and [web developer](https://github.com/csheldonhess/c4l16-cli-workshop/tree/master/webdev-exercise) exercises will likely be of interest, too; be sure to check those out after you're finished here!
+There are numerous ways archivists can benefit from using command line tools. In particular, the exercises below will cover conversion of file formats and character encodings, batch renaming of files, searching for files and text within them, and making quick edits to text files. Parts of the [cataloger](https://github.com/csheldonhess/c4l16-cli-workshop/tree/master/cataloging-exercise) and [web developer](https://github.com/csheldonhess/c4l16-cli-workshop/tree/master/webdev-exercise) exercises will likely be of interest, too; be sure to check those out after you're finished here!
 
 Also, a reminder: the workshop leaders are here to help. Put up a sticky note if you need help, or feel free to ask others who are working on the same exercise! We wrote all of this out so you'd have it to refer to later, but we _want_ to help while you've got us! If anything's unclear or confusing, let us know!
 
@@ -20,7 +20,7 @@ Run the following command (don't type the >):
 
 Congratulations, you just ran a Python script from the command line! 👍
 
-Digression: "Why," you might ask, "did we stick `./` in front of the name of the script?" Good question! When you want to run a script, you need to specify the full name of the script, which includes the path. In this case, you could also run it using '/home/nitrous/cli-workshop/archive-exercise/makefiles.py`, but that's a lot to type. And, as we mentioned earlier, when you want to refer to the current working directory, `.` is great shorthand, much easier to type.
+Digression: "Why," you might ask, "did we stick `./` in front of the name of the script?" Good question! When you want to run a script, you need to specify the full name of the script, which includes the path. In this case, you could also run it using `/home/nitrous/cli-workshop/archive-exercise/makefiles.py`, but that's a lot to type. And, as we mentioned earlier, when you want to refer to the current working directory, `.` is great shorthand, much easier to type.
 
 Now, look in the directory again, and notice there's a new subdirectory, `c4lfiles`. You'll use this during the "Batch Renaming Files" exercise, later. For now, we're going to do fun things with another file in the directory, `lorem.txt`.
 
@@ -38,9 +38,14 @@ This tells you the _type_ of the file `lorem.txt`. The `-b` flag tells it to be 
 
 Including `-i` changes the format of its output to include its (MIME type)[https://en.wikipedia.org/wiki/Media_type] along with, if applicable, the character encoding. To see the difference, go ahead and also type
 
-`> file -b lorem.txt` or `file lorem.txt`
+`> file -b lorem.txt` 
+`> file lorem.txt`
 
 Often having the more precise output is helpful, so getting in the habit of using `-bi` is not a bad choice.
+
+It would be valid, if you preferred, to separate the flags:
+
+`> file -b -i lorem.txt`
 
 So now we know our file is UTF-8. 
 
@@ -104,9 +109,6 @@ Here's a list of the regular expression syntax we'll use today (and maybe one we
 - `s/x/y/` - You may have seen this one around various tech chats, used as a shorthand for "I meant y, not x." This takes out x and replaces it with y ("s" is for "substitute," but the s/x/y/ pattern is referred to as a "switch statement")
 - `.` - this is a special character in regex and means "any character"
 - `\` - this is the escape character, allowing you to use a special character as a literal (if you want to match on a period, use `\.`)
-<!---
-- `^` - means "not," in any case we'll use it today; it can also mean "beginning of line"
--->
 - `$` - means "the end of the string" (if it's in the first half of a switch statement)
 - `[]` - means "character class," or "match one thing out of what's inside the brackets"; it changes the behavior of special characters, too 
 - `()` - means "group" and allows a match to be referred to later
@@ -150,7 +152,7 @@ The `-n` flag prevented it from actually running; it just showed you what it _wo
 Look at your list of files (`ls`), and you should see that they all end in ".csv"
 
 Other places this might come in handy: 
-- JPEGs mixed in with your JPGS (`rename 's/\.jpeg$/.jpg/' *.jpeg` -- though keep in mind that this will only match on lowercase ".jpeg", just as `rename 's/\.JPEG$/.jpg/' *.jpeg` will only match on uppercase)
+- JPEGs mixed in with your JPGS (`rename 's/\.jpeg$/.jpg/' *.jpeg` -- though keep in mind that this will only swap out lowercase ".jpeg", just as `rename 's/\.JPEG$/.jpg/' *.jpeg` will only swap out uppercase)
 - HTM files mixed in with your HTML files (`rename 's/\.htm$/.html/' *.htm`)
 
 #### Change the various delimiters to underscores
@@ -174,8 +176,11 @@ The first command is a super straightforward switch statement (say that five tim
 The second command is very similar, but because `+` is a special character for regular expressions, we have to escape it. Again, we want to do the swap more than once if we have a filename with multiple plusses, so we include the `g` flag.
 
 A slight digression: remember, __spaces in filenames are problematic__. We can work around them, but we have to remember to escape every space, or else use quotes (single or double quotes, doesn't matter). So, to view the contents of `that file.txt`, any of these commands  would do:
+
 `less that\ file.txt`
+
 `less 'that file.txt'`
+
 `less "that file.txt"`
 
 Spaces have to be escaped both in normal command line usage _and_ in regular expressions (_usually_, more on that below).
@@ -224,7 +229,7 @@ Nothing in this command is new, except for using multiple groups. It's just more
 
 ## Grep
 
-Grep is an incredibly useful tool for finding a particular word or phrase within a text file. 
+Grep is an incredibly useful tool for finding a particular word or phrase or pattern within a text file. 
 
 Let's say you have a copy of the Declaration of Human Rights handy on your machine (you _do_, actually: `human_rights.txt`), and you want to find the part where it talks about freedom of expression, without having to read the whole thing.
 
@@ -234,7 +239,7 @@ Go ahead and run this:
 
 The `-i` flag is _super_ useful, because it makes the search case-insensitive.
 
-The `-n` flag is _also super_ useful, because it tells grep to output the line number. 
+The `-n` flag is _also_ super useful, because it tells grep to output the line number. 
 
 The part in quotation marks is a regular expression (in quotes because of the spaces). You can use the same tricks you learned above while grepping files! 
 
@@ -246,6 +251,8 @@ It shows you this section of these directions (we did mention you had a copy of 
 
 ## Find
 
+Sometimes you forget where you put a file, or you need to look for files based on certain attributes (like when they were created or modified). That's when you use `find`.
+
 Remember earlier today when we implied that all commands looked like
 
 `> command [-flags] [arguments]`?
@@ -256,23 +263,27 @@ Wellll, that was mostly true. But some commands have flags that 1) are more than
 
 So if you want to make a list of files named, for instance, "instructions.md" in `/home/nitrous/cli-workshop/`, here's what that looks like:
 
-`> find /home/nitrous/cli-workshop/ -name instructions.md -print
+`> find /home/nitrous/cli-workshop/ -name instructions.md -print`
 
 (It should show you the names and full paths of three files.)
 
-You can do some really powerful stuff with `find`, including searching for files that were accessed on a certain date (not a super useful example to run, right now) or modified on a certain date or are a certain size.
+`/home/nitrous/cli-workshop` is where it starts looking, and it looks for files with the name "instructions.md," in all of the subdirectories under that directory. (There is a flag to prevent it from acting recursively, though.) That final flag, `-print`, tells it to show a list of those files and their paths.
+
+You can do some really powerful stuff with `find`, including searching for files that were accessed on a certain date (not a super useful example to run, right now, on this machine) or files that were modified on a certain date or files that are a certain size.
 
 Here's a command to look at everything in our workshop directory that was modified today:
 
 `> find /home/nitrous/cli-workshop/ -mtime -1 -print`
 
-But you see that `-print` flag? That implies that there are other things you can do, besides printing the list, right? Right. 😃
+But you saw that `-print` flag? That implies that there are other things you can do, besides printing the list, right? Right. 😃
 
-`-mtime` is "the time when the file was modified," and `-1` is, confusingly, not actually a flag; it means "less than one day ago"; its inverse is `+1`, meaning "more than a day ago." How do you think you'd get the files modified yesterday?
+`-mtime` is "the time when the file was modified," and `-1` is, confusingly, not actually a flag; it means "less than one day ago"; its inverse is `+1`, meaning "more than a day ago." How do you think you'd get the files modified yesterday? (Try it!)
 
 You can execute commands on all of the files you `find`, which is a lot of power to have in one command... It also explains why I said you could replace `rename`, above, with a cleverly-run `find` command. (That's an exercise for any of you who want to try it.) There's more information on `find` [here](https://kb.iu.edu/d/admm).
 
 ## Nano
+
+Sometimes you need to edit text files, even though you're busy doing stuff on the command line. Not a problem.
 
 There are a whole bunch of text editors available on the command line, and there are strong feelings about which one's best. They're all good, honestly; just, some require a bit more time commitment to learn.
 
