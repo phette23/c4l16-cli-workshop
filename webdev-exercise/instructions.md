@@ -101,7 +101,15 @@ What happens? How many HTTP requests did `curl` send & where did you end up? Whi
 
 Do you have any redirects on your institution's website? Try following them! If you can't think of one, try a URL that's been sent through a link shortener (e.g. copy any URL off of Twitter).
 
-Finally, let's do something a bit more sophisticated. We want to write a command line script which will test a series of URLs & return their HTTP status codes. We can run this script after a major software upgrade to see that all our web pages are still rendering properly. Create a file ending in ".sh", either in the Nitrous editor or a command line editor like `nano` or `vim`, and write something akin to the following:
+Finally, let's do something a bit more sophisticated. We want to write a command line script which will test a series of URLs & return their HTTP status codes. We can run this script after a major software upgrade to see that all our web pages are still rendering properly. Create a file ending in ".sh". You can do this right on the command line, using the `nano` editor. The command
+
+```sh
+> nano script.sh
+```
+
+creates a file named "script.sh" and launches you into the editor, where you can type in text as you normally would. `nano` is a good editor if you're new to writing on the command line because it shows its main keyboard shortcuts right at the bottom of the screen; the `^` stands for "Ctrl" so you type "Ctrl+O" to "write out" (save your edits) and Ctrl+X to exit the editor & return to the command line. If you're finding `nano` too cumbersome, feel free to use the Nitrous.io editor. On the other hand, if you're already experienced with `vim` or `emacs`, feel free to use those editors.
+
+Once you have a script file ready, write the following text into it:
 
 ```sh
 #!/usr/bin/env zsh
