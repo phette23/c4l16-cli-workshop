@@ -6,7 +6,7 @@ Web developers in particular stand to benefit from the command line, because the
 
 If you've come this far, then you've already used the `wget` command to download a file from the web via the command line. Downloading, unpacking, and moving files can be very useful operations when administering web applications. Often, we need to pull down a module or plugin and unzip it to add it to our application, or we want to download images and other media assets hosted elsewhere.
 
-Let's walk through a simple example of downloading a Drupal module. Drupal, if you're not familiar, is an open source content management system with a large library of community-supported modules hosted on https://www.drupal.org. Let's download the [Biblio](https://www.drupal.org/project/biblio) module:
+Let's walk through a simple example of downloading a Drupal module. Drupal, if you're not familiar, is an open source content management system with a large library of community-supported modules hosted on https://www.drupal.org. Let's download the [Biblio](https://www.drupal.org/project/biblio) module. First, make sure you're in the same "webdev-exercise" folder that this instructions document is in, then run:
 
 ```sh
 > wget https://ftp.drupal.org/files/projects/biblio-7.x-1.0-rc7.tar.gz

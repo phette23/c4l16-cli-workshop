@@ -45,7 +45,7 @@ Rather than type them all out time and time again, we can write them into a scri
 
 ## Running a Script
 
-Running a script is similar to using any command or executing a program, you simply type the full path to the script file and press Enter. But this becomes incredibly tedious; we don't want to have to type out a long path to our current directory every time we run a script. Instead, we use the period (".") shorthand which refers to our current location. So we can run the "script.sh" in this folder like so:
+Running a script is similar to using any command or executing a program, you simply type the full path to the script file and press Enter. But this becomes incredibly tedious; we don't want to have to type out a long path to our current directory every time we run a script. Instead, we use the period (".") shorthand which refers to our current location. For this section, make sure you're inside the "cataloging-exercise" folder so all the paths will be correct. So we can run the "script.sh" in this folder like so:
 
 ```sh
 > ./script.sh
