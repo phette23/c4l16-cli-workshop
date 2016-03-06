@@ -91,7 +91,7 @@ Note that we've wrapped the information we're passing to the script in quotation
 - What's the title of the record where the author's (100 field) last name is Rodriguez?
 - How many books have 651 fields?
 - Is Shakespeare more commonly the author (100) or the subject (600) in these records?
-- What are the other subjects of the book where Gentrification - California - San Francisco is a subject (650)?
+- What are the other subjects of the book where "Gentrification" appears in a subject field (650)?
 
 Try a few more queries on your own, with different combinations of "-e", "-f", and "-c" flags.
 
