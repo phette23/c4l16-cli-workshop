@@ -145,8 +145,6 @@ Let's try using MARCgrep to make a list of all 650 fields with Library in them _
 
 Now, let's write all 650 fields with "Archive" in them to the same file, overwriting the list of fields we compiled previously. We can use the `cat` command to print out the file's text afterwards, checking if we did it right. The `head` command is also useful here; it prints out just the beginning of a file, not its full contents.
 
-What if we want to _prepend_ our output to the beginning of a file? Can you think of a way, involving the `cat` command, to do that? Spoiler: it will not be straightforward.
-
 ## "Piping" Output Through Multiple Commands
 
 Perhaps the most powerful feature of the command line is that you can not only redirect a command's output to a file, you can pass the output of one command as the input to a following command. This seemingly simple feature allows us to create complex yet elegant operations by chaining together many smaller, simpler actions. We do so by putting a vertical bar "|" between two commands, which causes the _output_ of the former to be used as the _input_ of the latter. What is then printed out (or redirect to a file!) is the result of the last command.
