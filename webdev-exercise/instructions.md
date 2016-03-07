@@ -139,15 +139,15 @@ There are a few things going on in this script, which I'll explain only briefly:
 Writing that `status_check` function saved us a lot of redundant typing. There are much more elegant ways to write such a script, but this is a good start without being too complicated. But we still need to make the script _executable_ by running the following before we can use it:
 
 ```sh
-> chmod +x name-of-script.sh
+> chmod +x script.sh
 ```
 
-That essentially changes the file's permissions such that we can run it without telling the operating system what program needs to interpret our code every time. We invoke a script simply by typing its full path into our terminal and hitting return, as if it was a command. But typing the full path `/home/nitrous/c4l16-cli-workshop-master/webdev-exercise/name-of-script.sh` every time we want to run the script is…tiring. I mean, I'm exhausted just from typing it into these instructions. Whew.
+That essentially changes the file's permissions such that we can run it without telling the operating system what program needs to interpret our code every time. We invoke a script simply by typing its full path into our terminal and hitting return, as if it was a command. But typing the full path `/home/nitrous/c4l16-cli-workshop-master/webdev-exercise/script.sh` every time we want to run the script is…tiring. I mean, I'm exhausted just from typing it into these instructions. Whew.
 
 Instead, let's use the `.` which refers to the parent of our current directory, it's much shorter! Now we just type:
 
 ```sh
-./name-of-script.sh
+./script.sh
 ```
 
 Bingo! What prints out when you run this? Try giving a few different URLs as tests. What would you change if you wanted the script to follow redirects? What would you change if you only wanted to look for certain HTTP status codes in the script's output, say 400-level or 500-level errors? Try to insert a URL that 404s and print out _only its_ HTTP status code instead of all status' beginning with "HTTP/" as our original script does.
