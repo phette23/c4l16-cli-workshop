@@ -38,8 +38,10 @@ This tells you the _type_ of the file `lorem.txt`. The `-b` flag tells it to be 
 
 Including `-i` changes the format of its output to include its (MIME type)[https://en.wikipedia.org/wiki/Media_type] along with, if applicable, the character encoding. To see the difference, go ahead and also type
 
-`> file -b lorem.txt` 
-`> file lorem.txt`
+```
+> file -b lorem.txt
+> file lorem.txt
+```
 
 Often having the more precise output is helpful, so getting in the habit of using `-bi` is not a bad choice.
 
